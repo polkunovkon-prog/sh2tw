@@ -1,0 +1,3 @@
+- +4 bytes = Honor value
+- +4 bytes = Lord
+	- [[Lords1Enum]]

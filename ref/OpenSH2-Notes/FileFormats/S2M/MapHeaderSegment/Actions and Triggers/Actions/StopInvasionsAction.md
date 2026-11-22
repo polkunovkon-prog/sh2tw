@@ -1,0 +1,15 @@
+- +4 bytes = Lord to stop invasions of
+	- 00 = All lords
+	- 01 = Unused/Unknown idk - never used here
+	- 02 = Olaf
+	- 03 = Lord Barclay
+	- 04 = The Hawk
+	- 05 = The Bull
+	- 06 = Lady Seren
+	- 07 = Edwin
+	- 08 = The King
+	- 09 = Sir William
+	- 10 = Sir Grey
+- +1 byte = Type of invasions to stop
+	- 00 = Stop repeating invasions
+	- 01 = Stop all invasions

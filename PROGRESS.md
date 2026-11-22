@@ -1,5 +1,13 @@
 # PROGRESS.md — журнал проекта sh2tw (шаблон)
 
+## 2026-11-23
+### S0.1 done — Клон OpenSH2 Notes → ref/OpenSH2-Notes
+План: клонировать github.com/nox7/OpenSH2 (depth 1) → скопировать Notes/ в ref/OpenSH2-Notes (read-only).
+Реализовано: клон в scratch, Notes/ перенесён в ref/OpenSH2-Notes/.
+acceptance_cmd `test -d ref/OpenSH2-Notes/FileFormats/S2M` → ACCEPT_OK.
+Отклонение: клон делал агент (не человек) — содержательных отличий нет.
+
+
 > Копировать в корень проекта `sh2tw/PROGRESS.md`. Запись — append-only, новые сверху.
 > Агент ведёт после каждой задачи (протокол 00 §0.3). Человек читает и вписывает решения.
 

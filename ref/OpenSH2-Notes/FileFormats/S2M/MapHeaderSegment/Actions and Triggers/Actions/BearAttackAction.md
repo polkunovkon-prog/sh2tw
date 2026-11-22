@@ -1,0 +1,7 @@
+- +4 bytes = Flag color
+	- 00 = red
+	- 01 = Green
+	- 02 = Blue
+	- 03 = Yellow
+- +4 bytes = Flag number
+- +4 bytes = Number of bears

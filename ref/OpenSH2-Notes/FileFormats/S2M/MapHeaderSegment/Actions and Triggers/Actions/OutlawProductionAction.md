@@ -1,0 +1,14 @@
+- +4 bytes = Frequency setting
+	- 0 = Off
+	- 1 = Very low
+	- 2 = Low
+	- 3 = Normal
+	- 4 = High
+	- 5 = Very high
+- +4 bytes = Maximum outlaws
+- +4 bytes = Location
+	- 0 = All map
+	- 1 = Own estate (Where the camp is placed)
+	- 2 = neighboring estates
+	- 3 = Own and neighboring estates
+	- 4 = Human estate

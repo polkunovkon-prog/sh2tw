@@ -1,0 +1,11 @@
+- +4 bytes = unknown
+- +[[GoodsList]] bytes = List of goods
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = unknown
+- +4 bytes = Lord
+	- [[Lords1Enum]]

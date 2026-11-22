@@ -1,0 +1,1 @@
+- +4 bytes = Number of rats to infest player's castle

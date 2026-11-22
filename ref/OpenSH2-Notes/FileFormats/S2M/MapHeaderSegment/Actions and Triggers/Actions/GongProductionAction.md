@@ -1,0 +1,7 @@
+- +4 bytes = Frequency setting
+	- 0 = Off
+	- 1 = Very low
+	- 2 = Low
+	- 3 = Normal
+	- 4 = High
+	- 5 = Very high

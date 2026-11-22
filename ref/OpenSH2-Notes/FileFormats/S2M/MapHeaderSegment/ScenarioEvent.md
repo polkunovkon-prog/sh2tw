@@ -1,0 +1,17 @@
+- +4 bytes = unknown (1A currently)
+- +4 byte = Event's "+month" setting
+- +1 byte = Null byte? 00
+- +4 bytes = Action repeat count (For any action inside the event)
+	- "Always" is 00 00 00 00
+	- "Off" is a special case where this is 0 and the repeat time below is also 0
+- +4 bytes = Action repeat time (For any action inside the event)
+	- Time until next repeat after the first one, if repeat count has not been hit or is "Always"
+	- "Off" if 0
+- +4 bytes = Scenario action object Id
+- +1 byte = unknown (00 padding after Id of event)?
+- +4 byte = Event's delay setting
+- +4 bytes = unknown (all 00s)
+- +4 bytes = unknown (01)
+- +4 byte = ((SizeOfTriggerIdList)) Includes trailer marker
+- +4 byte = (# of triggers) in list of triggers
+- +((SizeOfEventIdList)) bytes = Contains trigger object Ids (# of triggers) + one extra 4 byte set as a "trailer marker"

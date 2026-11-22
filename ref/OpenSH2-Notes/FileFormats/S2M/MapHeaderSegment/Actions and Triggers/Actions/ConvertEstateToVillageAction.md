@@ -1,0 +1,7 @@
+- +4 bytes = Flag Color
+	- 00 = Red
+	- 01 = Green
+	- 02 = Blue
+	- 03 = Yellow
+- +4 bytes = Flag Number
+	- 0 based. 0 = 1

@@ -1,0 +1,9 @@
+- +4 bytes = Flag Color
+	- FF FF FF FF = Any flag color
+	- 00 = Red
+	- 01 = Green
+	- 02 = Blue
+	- 03 = Yellow
+- +4 bytes = Flag Number
+	- FF FF FF FF = Any flag number
+- +4 bytes = Number of rats to invade estate identified by flags

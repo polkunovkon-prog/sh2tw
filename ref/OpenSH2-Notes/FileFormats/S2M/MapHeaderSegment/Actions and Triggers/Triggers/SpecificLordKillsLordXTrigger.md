@@ -1,0 +1,4 @@
+- +4 bytes = Killed lord (who dies)
+	- [[Lords1Enum]]
+- +4 bytes = Killer lord (who does the killing)
+	- [[Lords1Enum]]

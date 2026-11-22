@@ -1,0 +1,1 @@
+- +4 bytes = Number of peasants to turn into armed, hostile peasants

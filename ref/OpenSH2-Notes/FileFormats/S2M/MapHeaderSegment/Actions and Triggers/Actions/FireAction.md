@@ -1,0 +1,1 @@
+- +4 bytes = Number of fires to start in player's castle
