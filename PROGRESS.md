@@ -1,7 +1,13 @@
 # PROGRESS.md — журнал проекта sh2tw (шаблон)
 
 ## 2026-11-23
-### S0.1 done — Клон OpenSH2 Notes → ref/OpenSH2-Notes
+### [служебно] Идентификация билда игры заказчика (готовит почву V5/S1.2) — 2026-11-23
+- exe = сборка Steam v1.5.0: PE TimeDateStamp 0x5EA311C0 (2020-04-24) и размер 14 208 000 B совпадают с эталоном docs sh2-unofficial-patch (docs/bugs: «v1.5.0, ts 0x5ea311c0»).
+- Отличия репака: version-ресурс переписан на 5.1.0.0 (string-таблица пуста), SteamLib.dll — Steam-эмулятор (сама игра не через Steam), папка v02.11.2022 = дата репака. На паттерн-поиск/идентичность exe патч опирается на PE-stamp+размер → предварительный вывод: трек 2 совместим (решает вечер V5).
+- Факт записан в spec/sh2_tz/13_prilozheniya.md §J (G13). md5/crc32 exe — там же, для S1.2.
+- Проверка: вывод python (PE-заголовок, GetFileVersionInfo) приложен в чате; артефакт замера — scratch, не в репо.
+
+### [S0.1] Клон OpenSH2 Notes → ref/OpenSH2-Notes — done
 План: клонировать github.com/nox7/OpenSH2 (depth 1) → скопировать Notes/ в ref/OpenSH2-Notes (read-only).
 Реализовано: клон в scratch, Notes/ перенесён в ref/OpenSH2-Notes/.
 acceptance_cmd `test -d ref/OpenSH2-Notes/FileFormats/S2M` → ACCEPT_OK.
