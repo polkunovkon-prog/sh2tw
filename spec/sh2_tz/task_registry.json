@@ -1,0 +1,1170 @@
+{
+ "registry_version": "1.0",
+ "updated": "2026-11-23",
+ "note": "Источник содержимого задач - файлы 09/10 пакета ТЗ. Статусы: pending | in_progress | awaiting_review | done | blocked. Оркестратор Hermes ведёт статусы, агент - только по протоколу 00.",
+ "stages": [
+  {
+   "id": "S0",
+   "title": "Этап 0: бумажный прототип",
+   "owner": "human+agent",
+   "tasks": [
+    {
+     "id": "S0.1",
+     "title": "Клонировать OpenSH2 в ref/OpenSH2-Notes (только Notes/)",
+     "spec_refs": [
+      "00_protokol_ispolnitelya.md",
+      "04_podsis_parser.md"
+     ],
+     "depends": [],
+     "acceptance_cmd": [
+      "test -d ref/OpenSH2-Notes/FileFormats/S2M"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "in_progress"
+    },
+    {
+     "id": "S0.2",
+     "title": "Таблица бумажного прототипа: 8 регионов, 4 лорда, доходы, росписи",
+     "spec_refs": [
+      "09_etapy_0_8.md"
+     ],
+     "depends": [],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S0.3",
+     "title": "Игровой вечер: 5+ сезонов, 3+ боя на готовых картах, протокол впечатлений",
+     "spec_refs": [
+      "09_etapy_0_8.md"
+     ],
+     "depends": [
+      "S0.2"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S0.4",
+     "title": "Правки дизайна по итогам прототипа (в PROGRESS.md)",
+     "spec_refs": [
+      "01_obzor_i_principy.md"
+     ],
+     "depends": [
+      "S0.3"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S1",
+   "title": "Этап 1: эксперименты V1-V12 (человек играет)",
+   "owner": "human+agent",
+   "tasks": [
+    {
+     "id": "S1.1",
+     "title": "tools/backup_maps.py + бэкап Saves/",
+     "spec_refs": [
+      "00_protokol_ispolnitelya.md"
+     ],
+     "depends": [
+      "S0.1"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli backup --dry-run"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S1.2",
+     "title": "tools/check_build.py: CRC exe + отчёт V5",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli check-build --report experiments/reports/V5.json"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S1.3",
+     "title": "Watcher Saves/ (поллинг 2 c) + лог файл-событий для V3a",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [],
+     "acceptance_cmd": [
+      "pytest tests/test_watcher.py"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S1.4",
+     "title": "V1 AI-only (человек) + разбор",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S1.1"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V1.json"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.5",
+     "title": "V2 автозапуск + V2b подпапки",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S1.1"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V2.json"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.6",
+     "title": "V4 rehost (человек) + разбор",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S1.1"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V4.json"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.7",
+     "title": "V5b скорость + V6 театр + V7 провижининг + V10 эстейты (человек)",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S1.1"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V7.json"
+     ],
+     "est": "3",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.8",
+     "title": "V8 энумы лордов (человек) + agent: ref/enums/*.csv",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md",
+      "13_prilozheniya.md"
+     ],
+     "depends": [
+      "S1.1"
+     ],
+     "acceptance_cmd": [
+      "test -f ref/enums/lords_trigger.csv"
+     ],
+     "est": "1.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.9",
+     "title": "V11 gamerules_fixed (человек) + разбор",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S1.2"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V11.json"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S1.10",
+     "title": "Сводный report_v.json + решение по треку 2 (человек утверждает)",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md",
+      "09_etapy_0_8.md"
+     ],
+     "depends": [
+      "S1.4",
+      "S1.5",
+      "S1.6",
+      "S1.7",
+      "S1.8",
+      "S1.9"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli validate report_v"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "title": "Этап 2: парсер",
+   "owner": "agent",
+   "tasks": [
+    {
+     "id": "S2.0",
+     "title": "ref/unit_types.csv + ref/buildings.csv (данные Приложений D/F)",
+     "spec_refs": [
+      "13_prilozheniya.md"
+     ],
+     "depends": [
+      "S0.1"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli validate-ref"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.1",
+     "title": "s2m_file.py: заголовок + сегменты + zlib + round-trip",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S0.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_s2m_file.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.2",
+     "title": "object_tree.py: обход по маркерам + RawObject",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_object_tree.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.3",
+     "title": "Корпус round-trip 89 карт + 78 сейвов",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.1"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli validate-corpus <maps_dir>"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.4",
+     "title": "map_header.py: EstateMarkers, Scenario, Mission, EstateStartupTroopPlacement, ScenarioEvent",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.2"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_map_header.py"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.5",
+     "title": "entities_decode.py + s2game.py",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.2",
+      "S2.0"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_entities.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.6",
+     "title": "snapshot_builder.py + CLI parse",
+     "spec_refs": [
+      "03_kontrakty_dannyh.md",
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.4",
+      "S2.5"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli parse tests/data/sample.s2m --out /tmp/snap.json"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.7",
+     "title": "diff_engine.py + CLI diff",
+     "spec_refs": [
+      "03_kontrakty_dannyh.md"
+     ],
+     "depends": [
+      "S2.6"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_diff.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.8",
+     "title": "honesty/accounting.py + CLI honesty",
+     "spec_refs": [
+      "03_kontrakty_dannyh.md"
+     ],
+     "depends": [
+      "S2.6"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_honesty.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.9",
+     "title": "aic.py + gamerules.py (round-trip)",
+     "spec_refs": [
+      "04_podsis_parser.md"
+     ],
+     "depends": [
+      "S2.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_aic.py tests/test_gamerules.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S2.10",
+     "title": "V3b: детект исхода по 4 реальным сейвам (с человеком)",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S2.6"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V3.json"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "title": "Этап 3: генератор сцен",
+   "owner": "agent+human",
+   "tasks": [
+    {
+     "id": "S3.0",
+     "title": "catalog-maps: реестр 89 карт + отбор шаблонов (человек утверждает роли)",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md",
+      "13_prilozheniya.md"
+     ],
+     "depends": [
+      "S2.6"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli catalog-maps <maps_dir>"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S3.1",
+     "title": "Маркеры вторжений на шаблонах (человек в редакторе) + эталоны+хэши",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md"
+     ],
+     "depends": [
+      "S3.0"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli validate-templates"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S3.2",
+     "title": "patcher.py + DSL манифестов + CLI diff-maps",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md",
+      "03_kontrakty_dannyh.md"
+     ],
+     "depends": [
+      "S2.4"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_patcher.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.3",
+     "title": "Патч-библиотека шаблонов: старт-ресурсы, войска, таймеры",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md"
+     ],
+     "depends": [
+      "S3.2",
+      "S1.10"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli build --template tpl_field_01 --selftest"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.4",
+     "title": "event_dsl.py: mission_events -> ScenarioEvent + golden-тесты",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md",
+      "13_prilozheniya.md"
+     ],
+     "depends": [
+      "S2.4",
+      "S1.8"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_event_dsl.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.5",
+     "title": "mapheader_writer.py + эталонная планка round-trip на 5 картах",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md"
+     ],
+     "depends": [
+      "S2.4"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_writer_roundtrip.py"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.6",
+     "title": "rehost.py (если V4=ok) + оборонительная сцена из снимка",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md"
+     ],
+     "depends": [
+      "S3.5"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_rehost.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.7",
+     "title": "runner/: launcher, watcher, outcome-лестница, watchdog",
+     "spec_refs": [
+      "05_podsis_generator_pisatel.md",
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S1.10",
+      "S2.6"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_runner.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S3.8",
+     "title": "V12: 4 типа сцен собираются и грузятся в игре (человек)",
+     "spec_refs": [
+      "10_eksperimenty_V1_V12.md"
+     ],
+     "depends": [
+      "S3.5",
+      "S3.7"
+     ],
+     "acceptance_cmd": [
+      "test -f experiments/reports/V12.json"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S4",
+   "title": "Этап 4: d3d9-мост (только при V5=ok)",
+   "owner": "agent",
+   "tasks": [
+    {
+     "id": "S4.1",
+     "title": "Каркас прокси + цепочка d3d9_chain (по docs/ unofficial-patch)",
+     "spec_refs": [
+      "06_podsis_huk_most.md"
+     ],
+     "depends": [
+      "S1.10"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S4.2",
+     "title": "Т4 heartbeat",
+     "spec_refs": [
+      "06_podsis_huk_most.md"
+     ],
+     "depends": [
+      "S4.1"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S4.3",
+     "title": "Т2 save_now + Т1 outcome",
+     "spec_refs": [
+      "06_podsis_huk_most.md"
+     ],
+     "depends": [
+      "S4.2"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S4.4",
+     "title": "install_bridge.py/remove_bridge.py + чек-лист V12b + чистый откат",
+     "spec_refs": [
+      "06_podsis_huk_most.md"
+     ],
+     "depends": [
+      "S4.3"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli bridge remove --dry-run"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S5",
+   "title": "Этап 5: честный ИИ v1",
+   "owner": "agent+human",
+   "tasks": [
+    {
+     "id": "S5.1",
+     "title": "Установка gamerules_fixed.dat (после V11) + живой тест лордов",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S1.9"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "0.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S5.2",
+     "title": "6 архетипов .aic (клоны+правки) + валидация длины",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md",
+      "13_prilozheniya.md"
+     ],
+     "depends": [
+      "S2.9"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_aic_build.py"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S5.3",
+     "title": "Живые тесты строительства архетипов (человек)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S5.2"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S5.4",
+     "title": "Хореографии вторжений: DSL-шаблоны волн по архетипам",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md",
+      "05_podsis_generator_pisatel.md"
+     ],
+     "depends": [
+      "S3.4",
+      "S5.2"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_choreo.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S5.5",
+     "title": "Дифф-протокол 50 general values -> ref/aic_general_values.md",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S2.9"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli aic-diff --report ref/aic_general_values.md"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S5.6",
+     "title": "Интеграция доктрин в scene_spec по persona лордов",
+     "spec_refs": [
+      "03_kontrakty_dannyh.md",
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S5.4"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_doctrine_apply.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S5.7",
+     "title": "Окно 20 матчей с человеком: цель >=30% побед ИИ",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md",
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S5.6",
+      "S3.8"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "2",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S6",
+   "title": "Этап 6: GA-конвейер",
+   "owner": "agent",
+   "tasks": [
+    {
+     "id": "S6.1",
+     "title": "ga/engine.py + ga_config.yaml",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S5.6"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_ga_engine.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.2",
+     "title": "fitness.py (лексикографический + честность)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S6.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_fitness.py"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.3",
+     "title": "runner_pool.py (Sandboxie + watchdog + рестарты)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S6.1",
+      "S3.7"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_runner_pool.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.4",
+     "title": "ga_cli (полуавтомат: next/result, 3 поля)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S6.2"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli ga --selftest"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.5",
+     "title": "Отладочные поколения 0-2",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S6.3",
+      "S6.4"
+     ],
+     "acceptance_cmd": [
+      "test -d ga_runs/debug_gen2"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.6",
+     "title": "Полный прогон 10-20 поколений (10-40 маш-ч)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S6.5"
+     ],
+     "acceptance_cmd": [
+      "test -f ga_runs/<run>/champion.json"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S6.7",
+     "title": "Валидация чемпиона: полный прогон + 5 живых матчей (человек)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md",
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S6.6"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1.5",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S7",
+   "title": "Этап 7: вертикальный срез кампании",
+   "owner": "agent+human",
+   "tasks": [
+    {
+     "id": "S7.1",
+     "title": "Каркас FastAPI + state.py + season.py + events.jsonl",
+     "spec_refs": [
+      "07_podsis_obolochka.md",
+      "03_kontrakty_dannyh.md"
+     ],
+     "depends": [
+      "S3.8"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_shell_state.py"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S7.2",
+     "title": "Экраны 1-2 (карта, регион) + API",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_api.py",
+      "playwright screenshots"
+     ],
+     "est": "2.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S7.3",
+     "title": "agenda_ai.py + economy.py + diplomacy.py",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_agenda.py"
+     ],
+     "est": "2",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S7.4",
+     "title": "autoresolve.py v1 + разметка живых боёв в бины",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.3"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_autoresolve.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S7.5",
+     "title": "Экраны 3-4 + scene_client.py + ручной ввод исхода",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.2",
+      "S3.7"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_scene_client.py",
+      "playwright screenshots"
+     ],
+     "est": "2.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S7.6",
+     "title": "Каталог событий (ядро 8) + анти-снежный ком",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.3"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_events.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S7.7",
+     "title": "undo/сохранения/журнал + счётчики P4",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_undo.py"
+     ],
+     "est": "1",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S7.8",
+     "title": "Плейтест вертикального среза: 3 сезона с реальными сценами (человек)",
+     "spec_refs": [
+      "09_etapy_0_8.md",
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S7.5",
+      "S7.6"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "2",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "S8",
+   "title": "Этап 8: полная кампания",
+   "owner": "agent+human",
+   "tasks": [
+    {
+     "id": "S8.1",
+     "title": "campaign_config: 12-16 регионов, 5-7 лордов с характерами",
+     "spec_refs": [
+      "03_kontrakty_dannyh.md",
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S7.8"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli validate-campaign campaigns/main/campaign_config.json"
+     ],
+     "est": "1.5",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S8.2",
+     "title": "Календарь событий + коалиции + восстания",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S8.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_events_full.py"
+     ],
+     "est": "1.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S8.3",
+     "title": "Два уровня победы + песочница после",
+     "spec_refs": [
+      "07_podsis_obolochka.md"
+     ],
+     "depends": [
+      "S8.1"
+     ],
+     "acceptance_cmd": [
+      "pytest tests/test_victory.py"
+     ],
+     "est": "0.5",
+     "human_review": false,
+     "status": "pending"
+    },
+    {
+     "id": "S8.4",
+     "title": "Баланс экономики и содержания (2 плейтеста)",
+     "spec_refs": [
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S8.2"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "2",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S8.5",
+     "title": "Настройка сложности доктринами (не бонусами)",
+     "spec_refs": [
+      "08_podsis_ga_doktriny.md"
+     ],
+     "depends": [
+      "S8.3"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "1",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S8.6",
+     "title": "Полный плейтест до обеих побед + метрики M1-M8",
+     "spec_refs": [
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S8.4",
+      "S8.5"
+     ],
+     "acceptance_cmd": [
+      "manual"
+     ],
+     "est": "3",
+     "human_review": true,
+     "status": "pending"
+    },
+    {
+     "id": "S8.7",
+     "title": "docs/player_guide.md + restore_vanilla.py + финальная приёмка DoD",
+     "spec_refs": [
+      "11_riski_metriki_DoD.md"
+     ],
+     "depends": [
+      "S8.6"
+     ],
+     "acceptance_cmd": [
+      "python -m sh2tw.cli restore-vanilla --dry-run"
+     ],
+     "est": "1.5",
+     "human_review": true,
+     "status": "pending"
+    }
+   ]
+  }
+ ]
+}
