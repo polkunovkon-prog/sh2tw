@@ -57,3 +57,19 @@ _(ID задачи, причина, что ждём)_
 
 _(см. записи выше; append-only: новые записи вставлять сразу после этого заголовка)_
 
+### [S1.1] tools/sh2tw: cli + backup (Maps+Saves) — done, 2026-11-23
+- Создано: `tools/sh2tw/{__init__,paths,backup,cli}.py`; конфиг `config/project.ini` (S0.0, ключ maps_dir_game/maps_dir_user расширен в paths.py).
+- Acceptance (реальный вывод):
+  ```
+  $ PYTHONPATH=tools .venv/Scripts/python.exe -m sh2tw.cli backup --dry-run
+  {stamp:…, targets: maps_game: 91 файлов/38 845 182 B; maps_user: 0; saves: 96/123 352 633 B} exit 0
+  ```
+  Реальный прогон (тот же день, полный бэкап по 00 §63): `backup/maps_game_2026-11-23_113430` — 91 файл, `backup/saves_2026-11-23_113430` — 96 файлов (пересчёт find-ом совпал с манифестом). `maps_user` (Documents/Stronghold 2/Maps) не существует — юзер-карт пока нет, цель пустая.
+  Примечание: запуск требует PYTHONPATH=tools и venv (`uv venv .venv --python 3.12`; pytest 9.2, pyyaml) — чистый `python` хостовой среды без pytest/pip.
+- Отклонения: вместо отдельного `tools/backup_maps.py` — модуль пакета `sh2tw.backup` + CLI-подкоманда (реестр требует ровно acc-команду `python -m sh2tw.cli backup`, т.е. пакетная форма и есть соответствие реестру; имя файла из 00 §63 — устаревшая форма).
+- Открытые вопросы: → QUESTIONS.md #1 (нумерация задач этапа S1 в 09 расходится с реестром; каталожный источник — реестр).
+- Коммит: [S1.1] …
+
+### Служебная: venv проекта
+- `.venv` (uv, Python 3.12.14, pytest 9.2.0, pyyaml) — стандартный интерпретатор задач; `.gitignore` добавлен (.venv/, backup/).
+

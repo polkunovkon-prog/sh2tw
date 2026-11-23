@@ -78,19 +78,19 @@
    "tasks": [
     {
      "id": "S1.1",
-     "title": "tools/backup_maps.py + бэкап Saves/",
-     "spec_refs": [
-      "00_protokol_ispolnitelya.md"
-     ],
-     "depends": [
-      "S0.1"
-     ],
-     "acceptance_cmd": [
-      "python -m sh2tw.cli backup --dry-run"
-     ],
-     "est": "0.5",
-     "human_review": false,
-     "status": "pending"
+      "title": "tools/backup_maps.py + бэкап Saves/",
+      "spec_refs": [
+       "00_protokol_ispolnitelya.md"
+      ],
+      "depends": [
+       "S0.1"
+      ],
+      "acceptance_cmd": [
+       "python -m sh2tw.cli backup --dry-run"
+      ],
+      "est": "0.5",
+      "human_review": false,
+      "status": "done"
     },
     {
      "id": "S1.2",
