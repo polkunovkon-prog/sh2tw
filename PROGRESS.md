@@ -47,13 +47,26 @@ _(дата, вопрос, решение — переносится из QUESTIO
 _(ID задачи, причина, что ждём)_
 
 ### Статистика (обновлять раз в этап)
-- Закрыто задач: 7/67 (S0.1, S1.1-S1.3, S2.2, S2.3, S2.9); частичные без человека: S2.0 (ценники ждут V7c), S2.4 (Scenario* raw, ждут V), S3.0 (каталог готов, выбор 8 — человек); вечёр потрачено: 0;
+- Закрыто задач: 9/67 (S0.1, S1.1-S1.3, S2.1-S2.3, S2.5, S2.9); частичные без человека: S2.0 (ценники ждут V7c), S2.4 (Scenario* raw, ждут V), S3.0 (каталог готов, выбор 8 — человек); вечёр потрачено: 0;
 - Машинных часов GA: 0; round-trip корпуса: гоняется в pytest (159 файлов, побайтовая реконструкция);
 - Открытых вопросов: 0.
 
 ---
 
 ## Записи (новые сверху)
+### [S2.5] entities_decode+s2game: кадры размещённых объектов — done, 2026-11-23
+- План: entities_decode.py+s2game.py (позы/классы/отпечатки юнитов и зданий в s2game) + tests/test_entities.py; приёмка pytest.
+- Сделано (субагент, верифицировано родителем): строгие кадры Building-52 и Entity-59 с валидацией тела (защита от ложных 8-байтных совпадений); HeightLayer строгая разметка; классы-исключения raw с причинами (Statue, SpiralStairTeleport); rotation/owner/team сознательно UNKNOWN — доков нет, гадали бы — соврали бы.
+- Проверки:
+  $ PYTHONPATH=tools pytest tests/test_entities.py -q
+  12 passed in 15.64s
+  $ PYTHONPATH=tools pytest tests/ -q
+  61 passed in 34.54s   (перепроверено родителем; reconstruct_segment==оригинал для всех 159 файлов после decode)
+- Числа: 928 377 s2game-объектов корпуса; размещено 55 167 зданий + 266 770 актёров (222 класса).
+- Создано: tools/sh2tw/formats/entities_decode.py, tools/sh2tw/formats/s2game.py, tests/test_entities.py; §J G20; registry S2.5 done.
+- След. автономно: S2.6 snapshot_builder+CLI parse (делегировано сразу).
+- Гейт человека: не требовался; V-уточнения owner/rotation позже.
+
 ### [S2.9 done + S3.0 механика] aic/gamerules + реестр карт (субагенты, верифицировано родителем) — 2026-11-23
 - План: S2.9 aic.py+gamerules.py round-trip; S3.0 машинная часть реестра карт.
 - Сделано: tools/sh2tw/formats/aic.py (.aic N@[0], записи 8B, секции по G19; 4 обрезанных test*.aic ожидаемо Sh2ParseError), gamerules.py (zlib с байта 0, lvl6 побайтовая переупаковка, распакованный сегмент через object_tree: GameRules+21 LordsRules raw/UNKNOWN), catalog_maps.py+CLI catalog-maps, ref/maps_catalog.csv (70 строк, 0 сбоев), §E.1 реестра карт; 19+4 новых тестов.
