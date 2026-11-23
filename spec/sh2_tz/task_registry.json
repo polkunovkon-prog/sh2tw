@@ -272,11 +272,11 @@
       "S0.1"
      ],
      "acceptance_cmd": [
-      "pytest tests/test_s2m_file.py"
-     ],
-     "est": "1.5",
-     "human_review": false,
-     "status": "pending"
+           "pytest tests/test_s2m_file.py"
+          ],
+          "est": "1.5",
+          "human_review": false,
+          "status": "done"
     },
     {
      "id": "S2.2",

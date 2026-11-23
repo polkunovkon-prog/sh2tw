@@ -57,6 +57,12 @@ _(ID задачи, причина, что ждём)_
 
 _(см. записи выше; append-only: новые записи вставлять сразу после этого заголовка)_
 
+### [S2.1] s2m_file.py контейнер .s2m/.sh2 — done, 2026-11-23
+- Создано: tools/sh2tw/formats/s2m_file.py (FileHeaderModel, Segment с подбором zlib-уровня, S2mFile load/loads/roundtrip_bytes/roundtrip_ok/as_dict, Sh2ParseError); фикстуры tests/data/{sample.s2m,sample_notrail.s2m,sample_save.sh2}.
+- Acceptance `pytest tests/test_s2m_file.py`: **12 passed** (5.06 s), включая test_corpus_roundtrip_all: ВСЕ файлы живого корпуса (91 карта + 96 сейвов) → roundtrip_bytes()==исходник, 0 падений; уровень сжатия находится перебором 0–9 (FLEVEL-подсказка из FLG).
+- Баги-на-пути: (а) проверка CMF «(b[o]>>4)==8» (FLEVEL вместо CM) → (CMF&0x0F)==8+%31; (б) усечение хвоста потока проходило молча → контроль d.eof; (в) тест усечения на файле с tail=0 (у sample трейлер 52 B делал cut=10 легальным — G14); (г) опечатка латинского пути создала мусор C:\Users\Konstantin\ — файл переписан верно, удаление мусора → QUESTIONS #2 (агенту запрещено политикой).
+- Открытых вопросов по форматной части нет. Коммит: [S2.1] …
+
 ### [S1.3] watcher Saves/ + лог файл-событий — done, 2026-11-23
 - Создано: `tools/sh2tw/watcher.py` (snapshot/diff чистые + watch() поллинг, JSONL-логгер), `tests/test_watcher.py`, CLI-подкоманда `watch-saves` (--secs/--interval/--out), `pyproject.toml` (pytest pythonpath=["tools"] — точная acc-команда работает без env; pyright extraPaths).
 - Acceptance: `pytest tests/test_watcher.py` → 4 passed. Смоук по живому каталогу: `watch-saves --secs 2 --interval 1` → 0 событий, exit 0 (писать было некому — корректно).
