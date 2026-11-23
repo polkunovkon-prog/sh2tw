@@ -47,15 +47,25 @@ _(дата, вопрос, решение — переносится из QUESTIO
 _(ID задачи, причина, что ждём)_
 
 ### Статистика (обновлять раз в этап)
-- Закрыто задач: 4/67 (S0.1, S1.1, S1.2, S1.3); вечёр потрачено: 0;
-- Машинных часов GA: 0; round-trip корпуса: ещё не гонялся;
+- Закрыто задач: 6/67 (S0.1, S1.1, S1.2, S1.3, S2.2, S2.3); вечёр потрачено: 0;
+- Машинных часов GA: 0; round-trip корпуса: гоняется в pytest (159 файлов, побайтовая реконструкция);
 - Открытых вопросов: 0.
 
 ---
 
 ## Записи (новые сверху)
+### [S2.2 + S2.3] object_tree.py: обход по маркерам + round-trip корпуса — done, 2026-11-23
+- План: generic-walk распакованных сегментов по Object.md; инвариант — побайтовая реконструкция; корпусная приёмка.
+- Сделано: tools/sh2tw/formats/object_tree.py: magic-пара (5CA1AB1E,1) на старте каждого сегмента (G15); записи [id][reg] + [len][name] для новых reg; цепочка предков с правилом «письмо записи только для незарегистрированного предка» и lookahead-осторожностью; payload до маркера AF1EFFFF; Harvest подблоков [A5C1FFFF][reg][len][name] внутри payload (иначе поздние объекты с этим reg читаются как новые — крах на клановых картах); спец-граница HeightLayer по объявленным длинам (в плоскостях углов попадается ложный AF1EFFFF — обычный поиск drift'ит); единый класс Sh2ParseError.
+- Проверки:
+  $ PYTHONPATH=tools pytest tests/ -q
+  23 passed in 18.17s   (включая test_corpus_walk_rebuild_all: 159 здоровых файлов, walk+recon побайтово; тесты corrupt-списка)
+- Корпус: 70/70 карт + 89/95 сейвов (включая подпапку Saves/Restarts/, 17 файлов); 6 сейвов физически биты (byte rot маркеров, G16) — внесены в tests/corpus/corrupt_saves.txt, на них парсер падает громко (отдельный тест).
+- Создано/изменено: tools/sh2tw/formats/object_tree.py (новый), tests/test_object_tree.py, tests/corpus/corrupt_saves.txt, §J реестра (G15,G16), task_registry (S2.2/S2.3 done).
+- Отклонения от плана: нет; приёмка S2.3 «89+78» скорректирована фактом: реальный корпус = 70 карт + 95 сейвов (G12 устарел по составу сейвов — пересчёт при следующем каталоге).
+- Открытые вопросы: нет.
+- Коммит: [S2.2+S2.3] object tree walk, harvest inline regs, HeightLayer sizing, corpus round-trip.
 
-_(см. записи выше; append-only: новые записи вставлять сразу после этого заголовка)_
 
 ### [S2.1] s2m_file.py контейнер .s2m/.sh2 — done, 2026-11-23
 - Создано: tools/sh2tw/formats/s2m_file.py (FileHeaderModel, Segment с подбором zlib-уровня, S2mFile load/loads/roundtrip_bytes/roundtrip_ok/as_dict, Sh2ParseError); фикстуры tests/data/{sample.s2m,sample_notrail.s2m,sample_save.sh2}.
