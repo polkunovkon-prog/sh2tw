@@ -100,6 +100,83 @@ enum_id, context (trigger|action|scenario|estates), player_at (0|1|21?), lord_na
 
 Из копии заказчика: 89 файлов (70 .s2m + 19 .s2c: 30 kingmaker, 25 warcampaign, 19 historical, 8 freebuild, 7 peacecampaign). Форма реестра: `id, file, type, mapsize, lords, estates, markers_1..8 (расставил человек), роль (field|siege|defense|theater), sha256`. Кандидаты стартового отбора: Strong and Stable, Two Pronged Crown, Whitebear (план, этап 0). Отбор на живую проверку: 2 полевые, 3 штурмовые, 2–3 театральные, 1–2 специальные.
 
+### E.1. Машиностроный реестр (сгенерирован `catalog-maps`, 23.11.2026)
+
+Машинная часть S3.0: все 70 .s2m корпуса (maps_dir_game; maps_dir_user пустой) разобраны стеком S2.1/S2.2/S2.4, сбоев декода — 0. Распределение map_type из реального декода совпало с перечислением выше для .s2m: 30 kingmaker, 25 war_custom, 7 peace_custom, 8 free_build. Полная точность (map_name, размеры файлов) — в `ref/maps_catalog.csv`; здесь компактная выжимка: `замки/деревни` — слоты EstateMarkers kind 2/1 (всего слотов 32), `mission` — узлы Mission, `события` — узлы ScenarioEvent в mapheader-сегменте. Колонки `mapsize/lords` парсером ещё не декодируются (S2.5+); `markers_1..8` и `роль` — человеческая часть S3.0/S3.1 (маркеры расставляет человек в редакторе, роль утверждает человек); `sha256` — по мере отбора шаблонов. Каталог покрывает только .s2m (19 .s2c в разбор не входили).
+
+| файл | тип | замки | деревни | mission | события |
+|---|---|---|---|---|---|
+| (M1) Escape Home.s2m | peace_custom | 1 | 3 | 1 | 25 |
+| 9 миссия. спасения монастыря.s2m | war_custom | 2 | 7 | 11 | 65 |
+| Arena of Kings.s2m | kingmaker | 8 | 0 | 1 | 1 |
+| Australia.s2m | kingmaker | 4 | 3 | 1 | 1 |
+| Baltic.s2m | kingmaker | 5 | 8 | 1 | 1 |
+| Bear Necessities.s2m | peace_custom | 1 | 5 | 1 | 7 |
+| Coastal County.s2m | free_build | 1 | 2 | 1 | 1 |
+| Egypt.s2m | kingmaker | 2 | 5 | 1 | 1 |
+| Germany.s2m | kingmaker | 4 | 3 | 1 | 1 |
+| Grasslands.s2m | kingmaker | 8 | 1 | 1 | 1 |
+| Great Britain.s2m | kingmaker | 8 | 7 | 1 | 1 |
+| hawk rescue.s2m | war_custom | 2 | 1 | 1 | 15 |
+| India.s2m | kingmaker | 3 | 3 | 1 | 1 |
+| Island Hopping.s2m | free_build | 1 | 0 | 1 | 1 |
+| Kill Barclay.s2m | war_custom | 2 | 10 | 1 | 23 |
+| Lookout Mountain.s2m | free_build | 1 | 0 | 1 | 1 |
+| Middlewood.s2m | kingmaker | 2 | 0 | 1 | 1 |
+| Mountain Hideaway.s2m | free_build | 1 | 0 | 1 | 1 |
+| Orkney.s2m | peace_custom | 3 | 5 | 2 | 41 |
+| peace_chapter1.s2m | peace_custom | 4 | 5 | 12 | 145 |
+| Rescue Lady Seren.s2m | war_custom | 3 | 0 | 1 | 9 |
+| River Delta.s2m | free_build | 1 | 0 | 1 | 1 |
+| River Don.s2m | kingmaker | 4 | 3 | 1 | 1 |
+| Rocky Island.s2m | free_build | 1 | 0 | 1 | 1 |
+| scotland.s2m | peace_custom | 4 | 5 | 2 | 29 |
+| Shipwrecked.s2m | kingmaker | 2 | 0 | 1 | 1 |
+| Strong and Stable.s2m | kingmaker | 8 | 6 | 1 | 1 |
+| Swords for the King.s2m | peace_custom | 1 | 5 | 1 | 11 |
+| The Four Woods.s2m | kingmaker | 4 | 5 | 1 | 1 |
+| TheNewFrontier.s2m | war_custom | 5 | 8 | 2 | 125 |
+| Three Bridges.s2m | kingmaker | 4 | 7 | 1 | 1 |
+| Three Valleys.s2m | free_build | 1 | 0 | 1 | 1 |
+| To The Sea.s2m | kingmaker | 4 | 6 | 1 | 1 |
+| Tropical Retreat.s2m | free_build | 1 | 0 | 1 | 1 |
+| tutorial.s2m | peace_custom | 1 | 3 | 1 | 2 |
+| Two Pronged Crown.s2m | kingmaker | 6 | 4 | 1 | 1 |
+| USA.s2m | kingmaker | 8 | 4 | 1 | 1 |
+| Viking Island.s2m | war_custom | 2 | 3 | 2 | 22 |
+| Volcano.s2m | kingmaker | 4 | 0 | 1 | 1 |
+| war_chapter1.s2m | war_custom | 1 | 0 | 1 | 11 |
+| war_chapter10.s2m | war_custom | 1 | 1 | 1 | 10 |
+| war_chapter11.s2m | war_custom | 2 | 8 | 2 | 25 |
+| war_chapter12.s2m | war_custom | 1 | 0 | 1 | 18 |
+| war_chapter2.s2m | war_custom | 1 | 0 | 3 | 43 |
+| war_chapter3.s2m | war_custom | 1 | 0 | 1 | 8 |
+| war_chapter4.s2m | war_custom | 3 | 8 | 1 | 71 |
+| war_chapter5.s2m | war_custom | 1 | 0 | 2 | 40 |
+| war_chapter6.s2m | war_custom | 3 | 8 | 2 | 75 |
+| war_chapter7.s2m | war_custom | 1 | 1 | 1 | 20 |
+| war_chapter8.s2m | war_custom | 5 | 6 | 3 | 76 |
+| war_chapter9.s2m | war_custom | 1 | 0 | 1 | 17 |
+| Whitebear.s2m | kingmaker | 3 | 3 | 1 | 1 |
+| World_Europe.s2m | kingmaker | 6 | 9 | 1 | 1 |
+| World_Korea.s2m | kingmaker | 2 | 3 | 1 | 1 |
+| война с викингами.s2m | war_custom | 2 | 12 | 1 | 17 |
+| война с викингами1.s2m | war_custom | 2 | 0 | 2 | 7 |
+| война с викингами2.s2m | war_custom | 1 | 9 | 2 | 15 |
+| война с викингами3.s2m | war_custom | 2 | 0 | 1 | 3 |
+| война с викингами4.s2m | war_custom | 2 | 14 | 1 | 6 |
+| война с викингами5.s2m | war_custom | 2 | 14 | 1 | 18 |
+| Карта1.s2m | kingmaker | 4 | 1 | 1 | 1 |
+| Карта2.s2m | kingmaker | 4 | 4 | 1 | 1 |
+| Карта3.s2m | kingmaker | 3 | 2 | 1 | 1 |
+| Карта4.s2m | kingmaker | 4 | 0 | 1 | 1 |
+| Карта5.s2m | kingmaker | 4 | 11 | 1 | 1 |
+| Карта6.s2m | kingmaker | 2 | 2 | 1 | 1 |
+| Карта7.s2m | kingmaker | 6 | 0 | 1 | 1 |
+| Карта8.s2m | kingmaker | 4 | 1 | 1 | 1 |
+| леса и горы.s2m | kingmaker | 8 | 5 | 1 | 0 |
+| Троя!.s2m | war_custom | 1 | 0 | 2 | 24 |
+
 ## F. Формат .aic (F4, сводка)
 
 Длина `2928 + 8×N`; записи построек: (kind, локальные X/Z, поворот | group, param); 50 general values (семантика — дифф-протокол 08 §8.6); 24 списка × 10 точек; 10 групп × 20 точек; 240 флагов; точки `Z*100+X`; донжоны: 20 деревянный … 23 большой. Семантика планов (F5): все Castle Structure/Military постройки обязан содержать план (нет казармы — не построит); фермы/склады ИИ добавляет сам; приоритеты 1–255; несколько планов у лорда — выбор случайный (лишние переименовывать).
@@ -144,6 +221,7 @@ enum_id, context (trigger|action|scenario|estates), player_at (0|1|21?), lord_na
 | G16 | 6 сейвов корпуса физически биты (byte rot: первый байт END_OBJ AF↛D0/AB; у 89 здоровых сейвов таких маркеров ровно 0): dsf.sh2, dsfg.sh2, аепгл.sh2, выяап.sh2, ыП.sh2 (Saves/) и «9 миссия..._Restart_1.sh2» (Saves/Restarts/). Внесены в tests/corpus/corrupt_saves.txt; парсер обязан на них падать громко (Sh2ParseError), не чинить молча. Подпапка Saves/Restarts/ (17 файлов фичи рестартов) — часть корпуса | ✓ | подсчёт маркеров агентом 23.11.2026 + test_corrupt_list_is_actually_corrupt |
 | G17 | MapHeader (payload сегмента mapheader): [u32 0][u32 4][u32 id EstateMarkers][u32 1][u32 4][u32 id Scenario][u32 2][u32 L=длина блока имени с END][u32 C=символов UTF-16LE включая ведущий `\`][имя UTF-16LE][1B unk][u32 type: 0 kingmaker/2 war custom/3 peace custom/4 free build] + END; кросс-id резолвятся в объекты того же сегмента на всех 70 картах. EstateMarkers: payload ровно 396=[0][388=длина поля][32][32x{u32 packed_loc,i16 x,i16 z,u32 kind 0/1/2}][u32 0], запись i = имение i; war_chapter1 имение1=(151,29,kind2), war_chapter8 замки {1,2,3,10,11} деревни {4..9} — дословно по доку OpenSH2 | ✓ | pytest tests/test_map_header.py по всему корпусу, 23.11.2026 |
 | G18 | Документация OpenSH2 по Scenario/Mission/ScenarioEvent НЕ совпадает с payload'ами exe 2020-11-04: Scenario начинается [0][N][1][id...] вместо [0C][count]; у ScenarioEvent 0x1A лежит на смещении 16, а не 0, action-id в позиции документа не резолвится в Actions сегмента (выборка chapter1). Это согласуется с собственной оговоркой Scenario.md про «modern counted tagged arrays». Решение: эти три типа идут raw-passthrough (побайтовый round-trip уже гарантирован S2.2/S2.3), доразбор — через живой вечер/эксперименты (V), не блокирует оболочку | ✓ | пробник 23.11.2026 по корпусу (1060 ScenarioEvent, 105 Mission, 70 Scenario) |
+| G19 | .aic (castles/*.aic, 47 файлов): N@[0], формула 2928+8N бьётся на 43/47 (обрезаны 4 файла-заглушки test/test2/TEST3/test4.aic — deficit 2924/960 B, совпадает с AIC.md); запись 8B: word0=(kind:8,X:8,Z:8,rot:2..0) младший байт=kind, word1=(group:u16, param{0,1}, hi=0 у всех 8625 записей); секции: 50 general u32 @4+8N (часто FFFFFFFF=UNKNOWN), +200: 240 list-point (Z*100+X, signed), +1164: 200 group-point, +1964: 240 flag {0,1}, конец @2928+8N; Olaf N=90 kind20 x48 z40 rot0 — docs-пример сошёлся. gameRules.dat (2111 B): G4 про «2111-байтный заголовок» НЕВЕРНА — заголовка нет: zlib(789c) с байта 0, поток 2038 B, хвост 73 B raw; zlib level 6 пережимает поток побайтово (готовит писателю 05); распакованные 22092 B = дерево байт-объектов в синтаксисе сегментов s2m (object_tree без правок): GameRules + 21 LordsRules; семантика полей LordsRules не задокументирована → raw/UNKNOWN (паттерн G18) | ✓ | pytest tests/test_aic.py tests/test_gamerules.py (19 passed, 43 файла round-trip побайтово), перепроверка родителем 23.11.2026 |
 | G2 | 1 месяц ≈ 1 минута; скорость `+/−` numpad | ~ | Клавиши подтверждены (SH2 Heaven Shortcuts); множитель — V5b |
 | G3 | Ванильный ИИ: найм от 200 золота; сила = .aic+gameRules+скрипты | ✓ | — |
 | G4 | gameRules.dat 2111→zlib→дерево | ✓ | — |

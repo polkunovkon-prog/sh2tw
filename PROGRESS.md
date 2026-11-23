@@ -47,13 +47,24 @@ _(дата, вопрос, решение — переносится из QUESTIO
 _(ID задачи, причина, что ждём)_
 
 ### Статистика (обновлять раз в этап)
-- Закрыто задач: 6/67 (S0.1, S1.1, S1.2, S1.3, S2.2, S2.3); частичные без человека: S2.0 (CSV+валидатор, ждёт V7c), S2.4 (MapHeader/EstateMarkers готовы, Scenario* raw, ждёт V); вечёр потрачено: 0;
+- Закрыто задач: 7/67 (S0.1, S1.1-S1.3, S2.2, S2.3, S2.9); частичные без человека: S2.0 (ценники ждут V7c), S2.4 (Scenario* raw, ждут V), S3.0 (каталог готов, выбор 8 — человек); вечёр потрачено: 0;
 - Машинных часов GA: 0; round-trip корпуса: гоняется в pytest (159 файлов, побайтовая реконструкция);
 - Открытых вопросов: 0.
 
 ---
 
 ## Записи (новые сверху)
+### [S2.9 done + S3.0 механика] aic/gamerules + реестр карт (субагенты, верифицировано родителем) — 2026-11-23
+- План: S2.9 aic.py+gamerules.py round-trip; S3.0 машинная часть реестра карт.
+- Сделано: tools/sh2tw/formats/aic.py (.aic N@[0], записи 8B, секции по G19; 4 обрезанных test*.aic ожидаемо Sh2ParseError), gamerules.py (zlib с байта 0, lvl6 побайтовая переупаковка, распакованный сегмент через object_tree: GameRules+21 LordsRules raw/UNKNOWN), catalog_maps.py+CLI catalog-maps, ref/maps_catalog.csv (70 строк, 0 сбоев), §E.1 реестра карт; 19+4 новых тестов.
+- Проверки:
+  $ PYTHONPATH=tools pytest tests/ -q
+  49 passed in 19.71s   (родитель перепроверил сам: zlib gameRules от байта 0; Olaf 2928+8*90=3648, kind20 x48 z40 — дословно docs)
+  $ PYTHONPATH=tools python3 -m sh2tw.cli catalog-maps -> rows 70, failures []
+- Исправлен прежний факт G4: «2111-байтный заголовок gameRules» НЕВЕРЕН — заголовка нет, zlib с байта 0 (G19).
+- Открытые (не блокируют): семантика LordsRules и general-значений .aic — V-эксперименты; gamerules_fixed.dat (Lord Editor) на машине не найден — prefix-путь покрыт синтетикой.
+- Гейт человека: выбор 8 заготовок из каталога; игровой вечер (V7c цены, Scenario/Mission доразбор, S2.10).
+
 ### [S2.0 частична + S2.4 частична] ref-CSV/валидатор и map_header.py — 2026-11-23
 - S2.0: ref/unit_types.csv (22 строки, 8 полных цен из Прил. D) + ref/buildings.csv (64 класса корпуса) + CLI `validate-ref` (проходит: 0 ошибок). Закрытие ждёт замеров цен V7c (человек) — status pending c note.
 - S2.4: tools/sh2tw/formats/map_header.py: MapHeader и EstateMarkers — полный семантический разбор + кросс-ccылки id на всех 70 картах; фикстуры chapter1/chapter8 совпали с docs OpenSH2 дословно (G17). Scenario/Mission/ScenarioEvent оставлены raw-passthrough: документ OpenSH2 расходится с payload'ами exe 2020-11-04 (G18), побайтовый round-trip при этом обеспечен S2.2/S2.3. Доразбор — за живым вечером (V).

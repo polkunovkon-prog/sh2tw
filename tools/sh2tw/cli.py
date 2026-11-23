@@ -25,6 +25,11 @@ def main(argv: list[str] | None = None) -> int:
 
     vr = sub.add_parser("validate-ref", help="валидация ref/*.csv (S2.0)")
 
+    cm = sub.add_parser("catalog-maps", help="реестр карт-заготовок → ref/maps_catalog.csv (S3.0)")
+    cm.add_argument("maps_dir", nargs="?", default=None,
+                    help="разобрать один каталог (по умолчанию: maps_dir_game + maps_dir_user из project.ini)")
+    cm.add_argument("--out", default=None, help="путь CSV (по умолчанию ref/maps_catalog.csv)")
+
     w = sub.add_parser("watch-saves", help="лог файл-событий Saves/ (S1.3, для V3a)")
     w.add_argument("--secs", type=float, default=600, help="сколько секунд наблюдать")
     w.add_argument("--interval", type=float, default=2.0, help="период поллинга, с")
@@ -54,6 +59,18 @@ def main(argv: list[str] | None = None) -> int:
 
         repo = Path(__file__).resolve().parents[2]
         return run_validate_ref(repo)
+
+    if args.cmd == "catalog-maps":
+        from .catalog_maps import run_catalog_maps
+
+        repo = Path(__file__).resolve().parents[2]
+        res = run_catalog_maps(repo,
+                               Path(args.maps_dir) if args.maps_dir else None,
+                               Path(args.out) if args.out else None)
+        print(json.dumps(res, ensure_ascii=False, indent=1))
+        if res["failures"]:
+            print("БОКЕРЫ (не прошли декод):", *res["failures"], sep="\n  ")
+        return 0 if not res["failures"] else 1
 
     if args.cmd == "watch-saves":
         from .watcher import jsonl_logger, watch

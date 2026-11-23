@@ -412,7 +412,8 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done",
+          "done_note": "23.11.2026 субагент+верификация родителя: aic.py+gamerules.py, round-trip 43/43 здоровых .aic побайтово + gameRules zlib lvl6 побайтово (G19); 19 новых тестов; гейт: LordsRules-семантика и gamerules_fixed.dat — позже (V/загрузка)."
         },
         {
           "id": "S2.10",
@@ -452,7 +453,8 @@
           ],
           "est": "1",
           "human_review": true,
-          "status": "pending"
+          "status": "pending",
+          "note": "23.11.2026: механическая часть выполнена — ref/maps_catalog.csv (70 строк, 0 сбоев разбора) + CLI catalog-maps + §E.1; тесты test_maps_catalog.py. Оставлено человеку: выбор 8 заготовок."
         },
         {
           "id": "S3.1",
