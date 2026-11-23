@@ -365,7 +365,8 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done",
+          "done_note": "23.11.2026 субагент+верификация: snapshot_builder+CLI parse (accept PASS), 12 тестов; UNKNOWN — явные null+причины; coverage 57%/29% (G21, цель 15% не достигнута честно)."
         },
         {
           "id": "S2.7",

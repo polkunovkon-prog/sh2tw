@@ -30,6 +30,14 @@ def main(argv: list[str] | None = None) -> int:
                     help="разобрать один каталог (по умолчанию: maps_dir_game + maps_dir_user из project.ini)")
     cm.add_argument("--out", default=None, help="путь CSV (по умолчанию ref/maps_catalog.csv)")
 
+    pr = sub.add_parser("parse", help="карта/сейв (.s2m/.sh2) → snapshot.json (S2.6, контракт 03 §3.5)")
+    pr.add_argument("path", help=".s2m (карта) или .sh2 (сейв)")
+    pr.add_argument("--out", default=None,
+                    help="файл snapshot.json (без --out снимок печатается в stdout). "
+                         "Практическая уступка git-bash: '/tmp/...' разрешается в "
+                         "системный temp (tempfile.gettempdir()), т.к. нативный python3 "
+                         "писал бы '/tmp/...' в C:\\mp")
+
     w = sub.add_parser("watch-saves", help="лог файл-событий Saves/ (S1.3, для V3a)")
     w.add_argument("--secs", type=float, default=600, help="сколько секунд наблюдать")
     w.add_argument("--interval", type=float, default=2.0, help="период поллинга, с")
@@ -71,6 +79,32 @@ def main(argv: list[str] | None = None) -> int:
         if res["failures"]:
             print("БОКЕРЫ (не прошли декод):", *res["failures"], sep="\n  ")
         return 0 if not res["failures"] else 1
+
+    if args.cmd == "parse":
+        from .formats.s2m_file import Sh2ParseError
+        from .snapshot_builder import parse_snapshot, resolve_out_path
+
+        out_path = resolve_out_path(args.out) if args.out else None
+        try:
+            snap = parse_snapshot(Path(args.path), out_path)
+        except (Sh2ParseError, OSError) as e:  # 04 §4.7: падать быстро и ГРОМКО
+            print(f"ОШИБКА РАЗБОРА: {type(e).__name__}: {e}", file=sys.stderr)
+            return 1
+        if out_path is not None:
+            print(json.dumps({
+                "out": str(out_path), "source": snap["source"]["file"],
+                "sha256": snap["source"]["sha256"], "map": snap["map"],
+                "buildings": len(snap["buildings"]), "actors": len(snap["actors"]),
+                "estates": len(snap["estates"]),
+                "raw_unknown_objects": snap["raw_unknown_objects"],
+                "s2game_objects_total": snap["census"]["s2game_objects_total"],
+                "coverage": snap["census"]["coverage"],
+                "parse_errors": snap["parse_errors"],
+            }, ensure_ascii=False, indent=1))
+        else:
+            from .snapshot_builder import snapshot_json
+            print(snapshot_json(snap))
+        return 0
 
     if args.cmd == "watch-saves":
         from .watcher import jsonl_logger, watch
