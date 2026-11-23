@@ -1,0 +1,12 @@
+{
+  "source": "реестр фактов ТЗ 13_prilozheniya.md §J G13 (замер агента 2026-11-23) + docs sh2-unofficial-patch (эталон v1.5.0)",
+  "build": "Stronghold 2 Steam v1.5.0 (репак v02.11.2022, Steam-эмулятор SteamLib.dll)",
+  "exe_name": "Stronghold2.exe",
+  "expected": {
+    "size_bytes": 14208000,
+    "pe_timedatestamp": "0x5EA311C0",
+    "md5": "5ba5b2637caa46aded4e0e76cc01efef",
+    "crc32": "0xC50A196D",
+    "version_resource_note": "репак переписал FileVersion на 5.1.0.0 — на идентичность кода не влияет"
+  }
+}

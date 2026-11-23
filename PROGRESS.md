@@ -57,6 +57,13 @@ _(ID задачи, причина, что ждём)_
 
 _(см. записи выше; append-only: новые записи вставлять сразу после этого заголовка)_
 
+### [S1.2] check-build: exe == v1.5.0, отчёт V5.json — done, 2026-11-23
+- Создано: `ref/build_fingerprint.json` (эталон G13: size/PE ts/md5/crc32), `tools/sh2tw/check_build.py`, подкоманда CLI `check-build`.
+- Acceptance (реальный вывод): `PYTHONPATH=tools .venv/Scripts/python.exe -m sh2tw.cli check-build --report experiments/reports/V5.json` → все 4 checks match=true, RESULT «совпадает с v1.5.0», exit 0; `experiments/reports/V5.json` создан (решение track2 — UNKNOWN, ждёт вечер V5 по 10_эксперименты).
+- Баг-на-пути (зафиксирован): первый вариант читал COFF TimeDateStamp по смещению pe_off+4+20 (неверно, получились 0xa010b); верно pe_off+8. Пойман сверкой с md5/crc-эталоном — эталонные хеши работают как канареечный тест; в V5.json это событие не отражено, т.к. финальный прогон чистый.
+- Отклонений от плана нет. Открытых вопросов нет.
+- Коммит: ниже.
+
 ### [S1.1] tools/sh2tw: cli + backup (Maps+Saves) — done, 2026-11-23
 - Создано: `tools/sh2tw/{__init__,paths,backup,cli}.py`; конфиг `config/project.ini` (S0.0, ключ maps_dir_game/maps_dir_user расширен в paths.py).
 - Acceptance (реальный вывод):

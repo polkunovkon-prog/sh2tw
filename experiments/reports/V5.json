@@ -1,0 +1,34 @@
+{
+ "v_id": "V5",
+ "date": "2026-11-23T08:40:29Z",
+ "performer": "agent (агрегатная сверка) + human (вечер V5: установка патча, Ctrl+Shift+O)",
+ "hypothesis": "exe == Steam v1.5.0 → патч/оверхол/лорд-редатор совместимы",
+ "result": "совпадает с v1.5.0 (track2 совместим ожидаемо)",
+ "metrics": {
+  "exe": "D:\\неустановленные игры\\Stronghold 2 Steam Edition\\Stronghold 2 Steam Edition v02.11.2022\\Stronghold 2 Steam Edition v02.11.2022\\Stronghold2.exe",
+  "checks": {
+   "size_bytes": {
+    "expected": "14208000",
+    "actual": "14208000",
+    "match": true
+   },
+   "pe_timedatestamp": {
+    "expected": "0x5ea311c0",
+    "actual": "0x5ea311c0",
+    "match": true
+   },
+   "md5": {
+    "expected": "5ba5b2637caa46aded4e0e76cc01efef",
+    "actual": "5ba5b2637caa46aded4e0e76cc01efef",
+    "match": true
+   },
+   "crc32": {
+    "expected": "0xc50a196d",
+    "actual": "0xc50a196d",
+    "match": true
+   }
+  }
+ },
+ "decision": "UNKNOWN (ждёт вечер V5 — человек)",
+ "attachments": []
+}
