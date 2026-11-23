@@ -47,13 +47,23 @@ _(дата, вопрос, решение — переносится из QUESTIO
 _(ID задачи, причина, что ждём)_
 
 ### Статистика (обновлять раз в этап)
-- Закрыто задач: 10/67 (S0.1, S1.1-S1.3, S2.1-S2.3, S2.5, S2.6, S2.9); частичные без человека: S2.0 (ценники ждут V7c), S2.4 (Scenario* raw, ждут V), S3.0 (каталог готов, выбор 8 — человек); вечёр потрачено: 0;
+- Закрыто задач: 11/67 (S0.1, S1.1-S1.3, S2.1-S2.3, S2.5, S2.6-S2.7, S2.9); частичные без человека: S2.0 (ценники ждут V7c), S2.4 (Scenario* raw, ждут V), S3.0 (каталог готов, выбор 8 — человек); вечёр потрачено: 0;
 - Машинных часов GA: 0; round-trip корпуса: гоняется в pytest (159 файлов, побайтовая реконструкция);
 - Открытых вопросов: 0.
 
 ---
 
 ## Записи (новые сверху)
+### [S2.7] diff_engine + CLI diff — done (с честной оговоркой), 2026-11-23
+- План: детерминированный diff двух снапшотов/файлов + CLI diff; приёмка pytest tests/test_diff.py.
+- Сделано: placements/estates/census/map/container дельты, canonical JSON, null-vs-null не изменение; реальная пара Start/Restart сейвов разобрана (603/87 зданий, 3872/352 актёров дельты).
+- Проверки:
+  $ PYTHONPATH=tools pytest tests/test_diff.py -q   (перепроверено родителем)
+  12 passed in 3.79s   ; весь suite: 85 passed (73+12)
+- Честно: семантические события 03§3.6 (lord_died/estate_captured/...) невыводимы: owner/population/time = UNKNOWN (G18/G20/G21) — приёмка этапа 04 §4.7.3 остаётся ОТКРЫТОЙ до живых декодов Scenario/owner; obj_id между сейвами не идентичен (G22).
+- Создано: tools/sh2tw/diff_engine.py, tests/test_diff.py, cli.py(diff), §J G22, registry.
+- След. автономно: S2.8 honesty/accounting (последний из цепочки S2 без человека).
+
 ### [S2.6] snapshot_builder + CLI parse — done, 2026-11-23
 - План: детерминированный JSON-снапшот карты/сейва (03 §3.5 skeleton) + CLI parse; приёмка — точная команда реестра.
 - Сделано (субагент, верифицировано): tools/sh2tw/snapshot_builder.py + cli parse; детерминизм (parsed_at=mtime, sort_keys; два прогона байт-в-байт); UNKNOWN=null+unknown_fields с причинами; деградация mapheader->null+parse_errors, битые сейвы->exit1 громко; /tmp->gettempdir() (Windows-оговорка документирована).

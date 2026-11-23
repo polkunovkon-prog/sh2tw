@@ -382,7 +382,8 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done",
+          "done_note": "23.11.2026 субагент+верификация: механический diff (12 тестов, реальная пара Start/Restart сейвов). Семантические события (lord_died и тп) НЕ выводямы из текущего shape — acceptance 04 §4.7.3 остаётся открытой до декодов Scenario/owner (G18/G22)."
         },
         {
           "id": "S2.8",

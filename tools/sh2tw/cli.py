@@ -38,6 +38,15 @@ def main(argv: list[str] | None = None) -> int:
                          "системный temp (tempfile.gettempdir()), т.к. нативный python3 "
                          "писал бы '/tmp/...' в C:\\mp")
 
+    df = sub.add_parser("diff", help="diff двух snapshot.json (.json) либо двух "
+                                     "файлов .s2m/.sh2 через встроенный parse "
+                                     "(S2.7, 04 §4.2/§4.6)")
+    df.add_argument("a", help="snapshot.json ИЛИ .s2m/.sh2 (разберём сами)")
+    df.add_argument("b", help="snapshot.json ИЛИ .s2m/.sh2 (разберём сами)")
+    df.add_argument("--out", default=None,
+                    help="файл diff-документа (без --out — в stdout; "
+                         "'/tmp/...' -> системный temp, как у parse)")
+
     w = sub.add_parser("watch-saves", help="лог файл-событий Saves/ (S1.3, для V3a)")
     w.add_argument("--secs", type=float, default=600, help="сколько секунд наблюдать")
     w.add_argument("--interval", type=float, default=2.0, help="период поллинга, с")
@@ -104,6 +113,25 @@ def main(argv: list[str] | None = None) -> int:
         else:
             from .snapshot_builder import snapshot_json
             print(snapshot_json(snap))
+        return 0
+
+    if args.cmd == "diff":
+        from .diff_engine import diff_snapshots, diff_json
+        from .formats.s2m_file import Sh2ParseError
+        from .snapshot_builder import resolve_out_path
+
+        out_path = resolve_out_path(args.out) if args.out else None
+        try:
+            doc = diff_snapshots(Path(args.a), Path(args.b), out_path)
+        except (Sh2ParseError, OSError, ValueError) as e:  # 04 §4.7: ГРОМКО
+            print(f"ОШИБКА DIFF: {type(e).__name__}: {e}", file=sys.stderr)
+            return 1
+        if out_path is not None:
+            print(json.dumps({"out": str(out_path), "from": doc["from"]["file"],
+                              "to": doc["to"]["file"], "summary": doc["summary"]},
+                             ensure_ascii=False, indent=1))
+        else:
+            print(diff_json(doc))
         return 0
 
     if args.cmd == "watch-saves":
