@@ -47,6 +47,16 @@ def main(argv: list[str] | None = None) -> int:
                     help="файл diff-документа (без --out — в stdout; "
                          "'/tmp/...' -> системный temp, как у parse)")
 
+    hn = sub.add_parser("honesty", help="протокол честности матча (S2.8, 04 §4.6): "
+                                     "start.json end.json spec.json")
+    hn.add_argument("start", help="snapshot.json старта (или .sh2/.s2m — разберём)")
+    hn.add_argument("end", help="snapshot.json конца (или .sh2/.s2m — разберём)")
+    hn.add_argument("spec", help="scene_spec.json сцены")
+    hn.add_argument("--out", default=None, help="файл honesty_report.json "
+                     "(без --out — в stdout; '/tmp/...' -> системный temp)")
+    hn.add_argument("--check-balance", action="store_true",
+                    help="только проверка provision_balance(spec) — до матча (05 §5.2)")
+
     w = sub.add_parser("watch-saves", help="лог файл-событий Saves/ (S1.3, для V3a)")
     w.add_argument("--secs", type=float, default=600, help="сколько секунд наблюдать")
     w.add_argument("--interval", type=float, default=2.0, help="период поллинга, с")
@@ -133,6 +143,41 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(diff_json(doc))
         return 0
+
+    if args.cmd == "honesty":
+        import json as _json
+
+        from .diff_engine import load_snapshot
+        from .honesty.accounting import (HonestyError, provision_balance_detail,
+                                         report_json)
+        from .honesty.accounting import honesty_report as make_report
+        from .snapshot_builder import resolve_out_path
+
+        out_path = resolve_out_path(args.out) if args.out else None
+        try:
+            if args.check_balance:
+                spec = _json.loads(Path(args.spec).read_text(encoding="utf-8"))
+                det = provision_balance_detail(spec)
+                doc = {"schema_version": "1.0", "mode": "provision_balance",
+                       "scene_id": spec.get("scene_id"), **det.as_dict()}
+            else:
+                spec = _json.loads(Path(args.spec).read_text(encoding="utf-8"))
+                report = make_report(load_snapshot(Path(args.start)),
+                                     load_snapshot(Path(args.end)), spec)
+                doc = report
+        except (HonestyError, OSError, ValueError) as e:
+            print(f"ОШИБКА HONESTY: {type(e).__name__}: {e}", file=sys.stderr)
+            return 1
+        text = report_json(doc)
+        if out_path is not None:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(text + "\n", encoding="utf-8")
+            print(_json.dumps({"out": str(out_path), "verdict": doc.get("verdict"),
+                               "ok": doc.get("ok")}, ensure_ascii=False))
+        else:
+            print(text)
+        verdict = doc.get("verdict", doc.get("ok"))
+        return 0 if (verdict in ("pass", True)) else 1
 
     if args.cmd == "watch-saves":
         from .watcher import jsonl_logger, watch
