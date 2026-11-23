@@ -285,12 +285,33 @@ def create_app(campaign_dir: Path | str) -> Any:
             else {"error": str(exc.detail)}
         return JSONResponse(status_code=exc.status_code, content=detail)
 
+    # Статика фронтенда: приоритет — переопределение в campaign_dir/static
+    # (своя тема), затем пакетная поставка tools/sh2tw/shell/static/ (07 §7.1).
+    pkg_static = Path(__file__).resolve().parent / "static"
+
+    def _static_file(name: str) -> Path | None:
+        for base in (campaign_dir / st.STATIC_DIR, pkg_static):
+            p = base / name
+            if p.exists():
+                return p
+        return None
+
     @app.get("/")
     def root():
-        index = campaign_dir / st.STATIC_DIR / "index.html"
-        if index.exists():
+        index = _static_file("index.html")
+        if index is not None:
             return FileResponse(index)
         return {"status": "sh2tw shell", "docs": "/docs"}
+
+    @app.get("/{asset}")
+    def static_asset(asset: str):
+        # только плоские файлы фронтенда, без обхода каталогов (безопасность)
+        if asset not in ("app.js", "style.css", "favicon.ico"):
+            raise HTTPException(status_code=404, detail={"error": "не найдено"})
+        p = _static_file(asset)
+        if p is None:
+            raise HTTPException(status_code=404, detail={"error": f"нет {asset}"})
+        return FileResponse(p)
 
     @app.get("/api/state")
     def get_state():

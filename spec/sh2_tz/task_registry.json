@@ -1,6 +1,6 @@
 {
   "registry_version": "1.0",
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "note": "Источник содержимого задач - файлы 09/10 пакета ТЗ. Статусы: pending | in_progress | awaiting_review | done | blocked. Оркестратор Hermes ведёт статусы, агент - только по протоколу 00.",
   "stages": [
     {
@@ -399,7 +399,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S2.9",
@@ -490,7 +490,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.3",
@@ -507,7 +507,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.4",
@@ -525,7 +525,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.5",
@@ -541,7 +541,7 @@
           ],
           "est": "2",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.6",
@@ -557,7 +557,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.7",
@@ -575,7 +575,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S3.8",
@@ -703,7 +703,7 @@
           ],
           "est": "2",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S5.3",
@@ -737,7 +737,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S5.5",
@@ -753,7 +753,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S5.6",
@@ -770,7 +770,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S5.7",
@@ -811,7 +811,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S6.2",
@@ -827,7 +827,7 @@
           ],
           "est": "0.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S6.3",
@@ -844,7 +844,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S6.4",
@@ -860,7 +860,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S6.5",
@@ -934,7 +934,7 @@
           ],
           "est": "2",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S7.2",
@@ -951,7 +951,8 @@
           ],
           "est": "2.5",
           "human_review": true,
-          "status": "pending"
+          "status": "awaiting_review",
+          "note": "экраны 1-4 реализованы (static/, проверены браузером), живая приёмка — плейтест"
         },
         {
           "id": "S7.3",
@@ -967,7 +968,7 @@
           ],
           "est": "2",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S7.4",
@@ -983,7 +984,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S7.5",
@@ -1001,7 +1002,8 @@
           ],
           "est": "2.5",
           "human_review": true,
-          "status": "pending"
+          "status": "awaiting_review",
+          "note": "scene_client+экран исходов готовы, живая приёмка — плейтест"
         },
         {
           "id": "S7.6",
@@ -1017,7 +1019,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S7.7",
@@ -1033,7 +1035,7 @@
           ],
           "est": "1",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S7.8",
@@ -1075,7 +1077,8 @@
           ],
           "est": "1.5",
           "human_review": true,
-          "status": "pending"
+          "status": "awaiting_review",
+          "note": "campaign_config 12 регионов/5 лордов готов, утверждение состава — человек"
         },
         {
           "id": "S8.2",
@@ -1091,7 +1094,7 @@
           ],
           "est": "1.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S8.3",
@@ -1107,7 +1110,7 @@
           ],
           "est": "0.5",
           "human_review": false,
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": "S8.4",
@@ -1172,7 +1175,8 @@
           ],
           "est": "1.5",
           "human_review": true,
-          "status": "pending"
+          "status": "awaiting_review",
+          "note": "player_guide/install/restore_vanilla готовы, финальная приёмка DoD — плейтестом"
         }
       ]
     }

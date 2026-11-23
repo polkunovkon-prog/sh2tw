@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "main_v1",
+  "title": "Войны Вольмарских марок",
+  "description": "Полная кампания: вымышленная северная марка Вольмар, 12 регионов, 5 лордов. Сезонный цикл, живые бои в Stronghold 2 или авто-резолв, события живого мира, коалиции против лидера, два уровня победы и песочница после.",
+  "regions": [
+    {
+      "id": "r01", "name": "Соколий утёс", "type": "castle",
+      "neighbors": ["r02", "r05", "r06"],
+      "map_template": "tpl_falcon_crag_01",
+      "product": "iron", "base_income": 40, "garrison_cap": 60,
+      "castle_levels": {"1": "aic_wood_keep", "2": "aic_stone_keep",
+                        "3": "aic_small_castle", "4": "aic_big_castle",
+                        "5": "aic_fortress"}
+    },
+    {
+      "id": "r02", "name": "Мельничная заводь", "type": "village",
+      "neighbors": ["r01", "r03", "r07"],
+      "product": "wheat", "base_income": 26, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r03", "name": "Ольховая пуща", "type": "village",
+      "neighbors": ["r02", "r04", "r08"],
+      "product": "wood", "base_income": 24, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r04", "name": "Вороний кряж", "type": "castle",
+      "neighbors": ["r03", "r08"],
+      "map_template": "tpl_raven_ridge_01",
+      "product": "iron", "base_income": 46, "garrison_cap": 80,
+      "castle_levels": {"1": "aic_wood_keep", "2": "aic_stone_keep",
+                        "3": "aic_small_castle", "4": "aic_big_castle",
+                        "5": "aic_fortress"}
+    },
+    {
+      "id": "r05", "name": "Ячменное поле", "type": "village",
+      "neighbors": ["r01", "r06", "r09"],
+      "product": "wheat", "base_income": 30, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r06", "name": "Бычья гавань", "type": "castle",
+      "neighbors": ["r01", "r05", "r07", "r09", "r10"],
+      "map_template": "tpl_bull_harbor_01",
+      "product": "stone", "base_income": 44, "garrison_cap": 90,
+      "castle_levels": {"1": "aic_wood_keep", "2": "aic_stone_keep",
+                        "3": "aic_small_castle", "4": "aic_big_castle",
+                        "5": "aic_fortress"}
+    },
+    {
+      "id": "r07", "name": "Селдяной причал", "type": "village",
+      "neighbors": ["r02", "r06", "r08", "r11"],
+      "product": "wheat", "base_income": 28, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r08", "name": "Смоляной яр", "type": "village",
+      "neighbors": ["r03", "r04", "r07", "r12"],
+      "product": "pitch", "base_income": 22, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r09", "name": "Китовый фьорд", "type": "castle",
+      "neighbors": ["r05", "r06", "r10"],
+      "map_template": "tpl_whale_fjord_01",
+      "product": "iron", "base_income": 48, "garrison_cap": 100,
+      "castle_levels": {"1": "aic_wood_keep", "2": "aic_stone_keep",
+                        "3": "aic_small_castle", "4": "aic_big_castle",
+                        "5": "aic_fortress"}
+    },
+    {
+      "id": "r10", "name": "Дроздовый луг", "type": "village",
+      "neighbors": ["r06", "r09", "r11"],
+      "product": "wheat", "base_income": 32, "purchase_cost_honour": 100
+    },
+    {
+      "id": "r11", "name": "Серебряный брод", "type": "castle",
+      "neighbors": ["r07", "r10", "r12"],
+      "map_template": "tpl_silver_ford_01",
+      "product": "stone", "base_income": 42, "garrison_cap": 70,
+      "castle_levels": {"1": "aic_wood_keep", "2": "aic_stone_keep",
+                        "3": "aic_small_castle", "4": "aic_big_castle",
+                        "5": "aic_fortress"}
+    },
+    {
+      "id": "r12", "name": "Логово Волка", "type": "castle",
+      "neighbors": ["r08", "r11"],
+      "map_template": "tpl_wolfs_lair_01",
+      "product": "wood", "base_income": 55, "garrison_cap": 60,
+      "castle_levels": {"1": "aic_wood_keep", "3": "aic_small_castle",
+                        "5": "aic_fortress"}
+    }
+  ],
+  "lords": [
+    {"id": "player", "name": "Константин", "is_human": true,
+     "start_region": "r01"},
+    {
+      "id": "l_hawk", "name": "Лорд Мёллер Ястреб", "is_human": false,
+      "start_region": "r04", "aic_base": "aic_hawk",
+      "lord_editor_key": "hawk",
+      "persona": {"aggression": 0.75, "greed": 0.5, "builder": 0.3,
+                  "loyal": 0.2,
+                  "doctrine_pool": ["doc_raider_v1", "doc_rusher_v1",
+                                    "doc_balanced_v1"],
+                  "preferred_doctrine": "doc_raider_v1"}
+    },
+    {
+      "id": "l_bull", "name": "Лорд Гуннар Бык", "is_human": false,
+      "start_region": "r06", "aic_base": "aic_bull",
+      "lord_editor_key": "bull",
+      "persona": {"aggression": 0.5, "greed": 0.3, "builder": 0.7,
+                  "loyal": 0.6,
+                  "doctrine_pool": ["doc_fortress_v1", "doc_hedgehog_v1",
+                                    "doc_balanced_v1"],
+                  "preferred_doctrine": "doc_fortress_v1"}
+    },
+    {
+      "id": "l_olaf", "name": "Лорд Олаф Скальд", "is_human": false,
+      "start_region": "r09", "aic_base": "aic_olaf",
+      "lord_editor_key": "olaf",
+      "persona": {"aggression": 0.6, "greed": 0.7, "builder": 0.4,
+                  "loyal": 0.3,
+                  "doctrine_pool": ["doc_sieger_v1", "doc_raider_v1",
+                                    "doc_balanced_v1"],
+                  "preferred_doctrine": "doc_sieger_v1"}
+    },
+    {
+      "id": "l_ingrid", "name": "Королева Ингрид", "is_human": false,
+      "start_region": "r11", "aic_base": "aic_king",
+      "lord_editor_key": "king",
+      "persona": {"aggression": 0.35, "greed": 0.5, "builder": 0.5,
+                  "loyal": 0.8,
+                  "doctrine_pool": ["doc_balanced_v1", "doc_fortress_v1",
+                                    "doc_sieger_v1"],
+                  "preferred_doctrine": "doc_balanced_v1"}
+    }
+  ],
+  "victory": {
+    "short": {"type": "eliminate_lords", "lords": ["l_hawk", "l_olaf"],
+              "by_season": 30},
+    "full": {"type": "control_regions", "count": 9, "of": 12,
+             "by_season": 60}
+  },
+  "pacing": {"seasons_per_year": 4, "max_transitions_total": 15,
+             "theater_cooldown_seasons": 3, "max_empty_seasons_streak": 2,
+             "field_scene_minutes": [20, 45], "theater_months": [24, 36]},
+  "economy": {"village_tax_gold_per_month": 50,
+              "army_upkeep_gold_per_unit_month": 0.2,
+              "honour_festival_income": 8},
+  "autoresolve": {"unit_value_source": "ref/unit_types.csv",
+                  "wall_bonus_per_castle_level": 0.15, "logit_k": 3.0},
+  "events": {"probabilities": {"harvest_failure": 0.08, "plague": 0.05,
+                               "rats": 0.07, "fair": 0.10,
+                               "mercenaries": 0.08, "harsh_winter": 0.06,
+                               "embassy": 0.07, "hunt": 0.09, "feast": 0.06,
+                               "rebellion": 0.05}}
+}

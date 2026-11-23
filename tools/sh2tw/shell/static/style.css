@@ -1,0 +1,489 @@
+/* =========================================================================
+   style.css — стиль «пергамент» (бриф C, ТЗ 07 §7.1).
+   Палитра (максимум 5 цветов + оттенки):
+     беж-пергамент  #f0e6d2 / #e8dcc0
+     чернила        #3b2f1e (тёмно-коричневый текст)
+     акцент         #8b1a1a (красный: ИИ, ошибки, опасное)
+     позитив        #2e5d34 (тёмно-зелёный: игрок, успех)
+     неактив        #8a8070 (серый: нейтральное, подписи)
+   Шрифты системные: serif (Georgia) для заголовков, sans для данных.
+   Рамки — тонкие коричневые линии с лёгкой тенью. Без градиентов и неона.
+   ========================================================================= */
+
+:root {
+  --parchment: #f0e6d2;
+  --parchment-dark: #e8dcc0;
+  --ink: #3b2f1e;
+  --accent: #8b1a1a;
+  --good: #2e5d34;
+  --muted: #8a8070;
+  --line: rgba(59, 47, 30, 0.45);
+  --line-soft: rgba(59, 47, 30, 0.22);
+  --shadow: 0 2px 6px rgba(59, 47, 30, 0.25);
+  --paper: #fffaf0;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.45;
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  margin: 0;
+}
+
+h1 { font-size: 22px; letter-spacing: 0.02em; }
+h2 { font-size: 18px; }
+h3 { font-size: 15px; }
+
+.muted { color: var(--muted); }
+
+/* ------------------------------------------------------------ шапка ---- */
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  padding: 10px 18px;
+  background: var(--parchment-dark);
+  border-bottom: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.brand h1 { color: var(--accent); }
+
+.season-line {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+.stats-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  flex: 1 1 320px;
+  font-size: 14px;
+}
+
+.stat b { font-family: var(--serif); }
+
+.topbar-actions { display: flex; gap: 8px; }
+
+/* ------------------------------------------------------------- вкладки -- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 18px 0;
+  background: var(--parchment);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.tab {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 7px 14px 6px;
+  cursor: pointer;
+}
+
+.tab:hover { background: var(--parchment-dark); }
+
+.tab.active {
+  background: var(--parchment-dark);
+  border-color: var(--line);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------ экраны ---- */
+
+main { padding: 16px 18px 40px; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.panel {
+  background: var(--parchment-dark);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.panel-head h2 { color: var(--ink); }
+
+/* ------------------------------------------------------------- кнопки --- */
+
+.btn {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 6px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.btn:hover { background: #ffffff; }
+.btn:active { transform: translateY(1px); box-shadow: none; }
+.btn:disabled { color: var(--muted); cursor: not-allowed; box-shadow: none; }
+
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #f6efdd; }
+.btn-primary:hover { background: #a12020; }
+
+.btn-ok { background: var(--good); border-color: var(--good); color: #f6efdd; }
+.btn-ok:hover { background: #387040; }
+
+.btn-danger { color: var(--accent); border-color: var(--accent); }
+.btn-danger:hover { background: #f3d9d9; }
+
+.btn-ghost { background: transparent; box-shadow: none; }
+
+.btn-small { font-size: 13px; padding: 3px 10px; }
+
+.map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* ------------------------------------------------------- карта (SVG) ---- */
+
+.map-panel { padding: 12px; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.legend-item { display: inline-flex; align-items: center; gap: 5px; }
+
+.dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+}
+
+.dot-player { background: var(--good); }
+.dot-ai { background: var(--accent); }
+.dot-neutral { background: var(--muted); }
+
+.map-canvas { width: 100%; }
+
+.map-canvas svg {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.map-bg {
+  fill: var(--parchment-dark);
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.map-edge {
+  stroke: rgba(59, 47, 30, 0.38);
+  stroke-width: 2;
+  stroke-dasharray: 1 0;
+}
+
+.map-node { cursor: pointer; }
+.map-node:hover .map-node-body { stroke-width: 3.5; }
+
+.map-node-body {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.map-ring {
+  fill: none;
+  stroke: rgba(246, 239, 221, 0.85);
+  stroke-width: 1.2;
+}
+
+.map-name {
+  font-family: var(--serif);
+  font-size: 13px;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+
+.map-lv {
+  font-family: var(--serif);
+  font-size: 12px;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+
+/* ------------------------------------------------------ баннеры/карточки - */
+
+.offers-banner { margin-bottom: 12px; }
+
+.offers-title {
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.offer-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.offer-text { font-family: var(--serif); font-size: 15px; }
+.offer-actions { display: flex; gap: 8px; }
+
+.victory {
+  border: 2px solid var(--good);
+  border-radius: 10px;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+  margin-bottom: 14px;
+}
+
+.victory h2 { font-size: 26px; }
+.victory-win { border-color: var(--good); }
+.victory-win h2 { color: var(--good); }
+.victory-defeat { border-color: var(--accent); }
+.victory-defeat h2 { color: var(--accent); }
+
+/* -------------------------------------------------------- регион ------- */
+
+.facts {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 6px 18px;
+}
+
+.facts li { border-bottom: 1px dotted var(--line-soft); padding: 3px 0; }
+.facts b { font-family: var(--serif); }
+
+.region-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.inline-form {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.inline-form select,
+.inline-form input {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+
+.inline-form input { width: 84px; }
+
+.hint { font-size: 13px; color: var(--muted); }
+
+.sublist { margin: 8px 0 0; padding: 0; list-style: none; }
+.sublist li { margin: 4px 0; }
+
+/* ---------------------------------------------------------- бой -------- */
+
+.battle-sides {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.side {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.side h3 { margin-bottom: 6px; }
+.side-ours h3 { color: var(--good); }
+.side-theirs h3 { color: var(--accent); }
+
+.forecast {
+  font-family: var(--serif);
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.report ul.facts { margin-top: 6px; }
+.instruction {
+  font-family: var(--serif);
+  font-size: 16px;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* ----------------------------------------------------- сцены/дипломатия - */
+
+.scene-card .scene-map { font-family: var(--serif); color: var(--accent); }
+.scene-card .scene-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.dip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 7px 0;
+  border-bottom: 1px dotted var(--line-soft);
+}
+
+.dip-lord { font-family: var(--serif); min-width: 130px; }
+
+.dip-status { min-width: 90px; }
+.dip-war { color: var(--accent); font-weight: 700; }
+.dip-peace { color: var(--good); }
+.dip-alliance { color: var(--good); font-weight: 700; }
+
+/* ------------------------------------------------------- журнал/оверлей - */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(59, 47, 30, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.overlay.hidden { display: none; }
+
+.overlay-card {
+  background: var(--parchment);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  max-width: 640px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+  padding: 14px 18px;
+}
+
+.overlay-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.journal-list {
+  margin: 0;
+  padding-left: 22px;
+  font-size: 14px;
+}
+
+.journal-list li { margin: 4px 0; }
+
+/* ---------------------------------------------------------- тосты ------ */
+
+.toasts {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+  max-width: 360px;
+}
+
+.toast {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: #f6efdd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: var(--shadow);
+  white-space: pre-line;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.toast-ok { background: var(--good); border: 1px solid #244929; }
+.toast-error { background: var(--accent); border: 1px solid #6d1414; }
+.toast-hide { opacity: 0; }
+
+/* --------------------------------------------------------- адаптив ----- */
+
+@media (max-width: 700px) {
+  .topbar { padding: 8px 10px; }
+  main { padding: 10px 10px 30px; }
+  .tabs { padding: 6px 10px 0; }
+  .map-actions { flex-direction: column; align-items: stretch; }
+}

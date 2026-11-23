@@ -66,6 +66,13 @@ def main(argv: list[str] | None = None) -> int:
                      help="только список (по умолчанию; --no-dry-run удаляет)")
     cm2.add_argument("--no-dry-run", dest="dry_run", action="store_false")
 
+    sh = sub.add_parser("campaign", help="запуск оболочки кампании (K1, 07 §7.1): "
+                                  "uvicorn localhost:8402")
+    sh.add_argument("--campaign", default="campaigns/main",
+                    help="каталог кампании (campaign_config.json)")
+    sh.add_argument("--port", type=int, default=8402, help="порт (по умолчанию 8402)")
+    sh.add_argument("--host", default="127.0.0.1", help="адрес (по умолчанию 127.0.0.1)")
+
     dmm = sub.add_parser("diff-maps", help="побайтовое сравнение двух карт/сейвов "
                                        "по сегментам (S3.2, процедура 05 §5.3)")
     dmm.add_argument("a", help="эталон .s2m/.sh2")
@@ -169,6 +176,13 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(diff_json(doc))
         return 0
+
+    if args.cmd == "campaign":
+        from .shell.api import main as shell_main
+
+        sys.argv = ["sh2tw.shell.api", "--campaign", args.campaign,
+                    "--port", str(args.port), "--host", args.host]
+        return shell_main()
 
     if args.cmd == "build-scene":
         from .scenes.generator import GeneratorError, build_scene

@@ -44,8 +44,12 @@ class FixtureTemplate(Template):
 
 # ================================================================== базовые
 def test_root_and_state(client: TestClient, mini_campaign: Path):
-    assert client.get("/").json() == {"status": "sh2tw shell",
-                                      "docs": "/docs"}
+    # корень отдаёт фронтенд из пакета (07 §7.1); переопределение —
+    # campaign_dir/static/index.html имеет приоритет
+    r = client.get("/")
+    assert r.status_code == 200 and "screen-map" in r.text
+    assert client.get("/app.js").status_code == 200
+    assert client.get("/style.css").status_code == 200
     (mini_campaign / "static").mkdir()
     (mini_campaign / "static" / "index.html").write_text(
         "<html>карта</html>", encoding="utf-8")

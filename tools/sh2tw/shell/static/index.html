@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Войны Вольмарских марок — оболочка кампании</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <h1 id="campaign-title">Войны Вольмарских марок</h1>
+    <div id="season-line" class="season-line">Кампания загружается…</div>
+  </div>
+  <div id="stats-bar" class="stats-bar" aria-live="polite">
+    <span class="stat">Казна: …</span>
+  </div>
+  <div class="topbar-actions">
+    <button id="btn-undo" class="btn btn-ghost" type="button"
+            title="Отменить последнее действие (максимум 3 шага)">↶ Отменить</button>
+  </div>
+</header>
+
+<nav id="tabs" class="tabs" aria-label="Экраны кампании">
+  <button class="tab active" type="button" data-screen="screen-map">Карта кампании</button>
+  <button class="tab" type="button" data-screen="screen-region">Регион</button>
+  <button class="tab" type="button" data-screen="screen-battle">Подготовка боя</button>
+  <button class="tab" type="button" data-screen="screen-results">Итоги и двор</button>
+</nav>
+
+<main>
+
+  <!-- Экран 1 — карта кампании -->
+  <section id="screen-map" class="screen active">
+    <div id="victory-banner"></div>
+    <div id="offers-banner" class="offers-banner"></div>
+    <div class="panel map-panel">
+      <div class="panel-head">
+        <h2>Карта марок</h2>
+        <div class="legend">
+          <span class="legend-item"><i class="dot dot-player"></i>ваши земли</span>
+          <span class="legend-item"><i class="dot dot-ai"></i>владения ИИ</span>
+          <span class="legend-item"><i class="dot dot-neutral"></i>нейтральные</span>
+        </div>
+      </div>
+      <div id="map-canvas" class="map-canvas" aria-label="Региональная карта"></div>
+    </div>
+    <div class="map-actions">
+      <button id="btn-journal" class="btn" type="button">Журнал сезона ▤</button>
+      <button id="btn-season-next" class="btn btn-primary" type="button">Завершить сезон ▶</button>
+    </div>
+  </section>
+
+  <!-- Экран 2 — панель региона -->
+  <section id="screen-region" class="screen">
+    <div id="region-panel" class="panel">
+      <p class="muted">Выберите регион на карте кампании.</p>
+    </div>
+  </section>
+
+  <!-- Экран 3 — подготовка боя («цена боя до входа») -->
+  <section id="screen-battle" class="screen">
+    <div id="battle-panel" class="panel">
+      <p class="muted">Нет подготовленного похода: выберите чужой регион и нажмите
+        «Подготовить поход».</p>
+    </div>
+  </section>
+
+  <!-- Экран 4 — итоги, незакрытые сцены, дипломатия -->
+  <section id="screen-results" class="screen">
+    <div id="result-report"></div>
+    <div class="panel">
+      <div class="panel-head"><h2>Незакрытые сцены</h2></div>
+      <div id="pending-scenes"><p class="muted">Загрузка…</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Дипломатия</h2></div>
+      <div id="diplomacy"><p class="muted">Загрузка…</p></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Журнал сезона (панель поверх) -->
+<div id="journal-overlay" class="overlay hidden">
+  <div class="overlay-card">
+    <div class="overlay-head">
+      <h2>Журнал сезона</h2>
+      <button id="journal-close" class="btn btn-ghost" type="button"
+              title="Закрыть">×</button>
+    </div>
+    <ol id="journal-list" class="journal-list"></ol>
+  </div>
+</div>
+
+<!-- Тосты (правый верхний угол) -->
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
