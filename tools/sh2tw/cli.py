@@ -47,6 +47,25 @@ def main(argv: list[str] | None = None) -> int:
                     help="файл diff-документа (без --out — в stdout; "
                          "'/tmp/...' -> системный temp, как у parse)")
 
+    bs = sub.add_parser("build-scene", help="сборка сцены из scene_spec.json "
+                                       "→ Maps/S2TW_*.s2m (S3.8, 05 §5.2)")
+    bs.add_argument("spec", help="файл scene_spec.json (03 §3.3)")
+    bs.add_argument("--out-dir", default=None, help="каталог записи карты "
+                     "(по умолчанию maps_dir_game из project.ini)")
+    bs.add_argument("--template-id", default=None,
+                    help="template_id из templates/templates.json "
+                         "(по умолчанию — по роли сцены)")
+    bs.add_argument("--patch-manifest", default=None,
+                    help="*.patch.json якорных патчей шаблона (03 §3.8)")
+
+    cm2 = sub.add_parser("cleanup-maps", help="удаление сгенерированных "
+                                           "S2TW_* карт (03 §3.13)")
+    cm2.add_argument("--maps-dir", default=None, help="каталог Maps "
+                          "(по умолчанию maps_dir_game из project.ini)")
+    cm2.add_argument("--dry-run", action="store_true", default=True,
+                     help="только список (по умолчанию; --no-dry-run удаляет)")
+    cm2.add_argument("--no-dry-run", dest="dry_run", action="store_false")
+
     dmm = sub.add_parser("diff-maps", help="побайтовое сравнение двух карт/сейвов "
                                        "по сегментам (S3.2, процедура 05 §5.3)")
     dmm.add_argument("a", help="эталон .s2m/.sh2")
@@ -149,6 +168,48 @@ def main(argv: list[str] | None = None) -> int:
                              ensure_ascii=False, indent=1))
         else:
             print(diff_json(doc))
+        return 0
+
+    if args.cmd == "build-scene":
+        from .scenes.generator import GeneratorError, build_scene
+        from .scenes.patcher import PatchManifest, PatchManifestError
+        from .scenes.templates import TemplateError, template_for_role
+
+        try:
+            spec = json.loads(Path(args.spec).read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as e:
+            print(f"ОШИБКА SPEC: {e}", file=sys.stderr)
+            return 1
+        p = load_paths()
+        out_dir = Path(args.out_dir) if args.out_dir else p.maps_dir_game
+        role = {"field": "field", "siege": "siege", "defense": "defense",
+                "development": "theater"}[spec.get("type", "siege")]
+        manifest = None
+        if args.patch_manifest:
+            try:
+                manifest = PatchManifest.load(Path(args.patch_manifest))
+            except PatchManifestError as e:
+                print(f"ОШИБКА МАНИФЕСТА: {e}", file=sys.stderr)
+                return 1
+        try:
+            tpl = template_for_role(args.template_id or role,
+                                    game_maps_dir=p.maps_dir_game)
+            rep = build_scene(spec, tpl, out_dir,
+                              game_maps_dir=p.maps_dir_game,
+                              patch_manifest=manifest)
+        except (GeneratorError, TemplateError) as e:
+            print(f"ОШИБКА ГЕНЕРАЦИИ: {type(e).__name__}: {e}", file=sys.stderr)
+            return 1
+        print(json.dumps(rep.as_dict(), ensure_ascii=False, indent=1))
+        return 0
+
+    if args.cmd == "cleanup-maps":
+        from .scenes.generator import cleanup_generated
+
+        p = load_paths()
+        maps_dir = Path(args.maps_dir) if args.maps_dir else p.maps_dir_game
+        res = cleanup_generated(maps_dir, dry_run=args.dry_run)
+        print(json.dumps(res, ensure_ascii=False, indent=1))
         return 0
 
     if args.cmd == "diff-maps":
