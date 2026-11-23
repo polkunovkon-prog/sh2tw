@@ -260,7 +260,9 @@
           ],
           "est": "0.5",
           "human_review": false,
-          "status": "pending"
+          "status": "pending",
+          "done_note": "23.11.2026: ref/*.csv + CLI validate-ref (PASS). Оставлено: числовые значения цен/категорий — замеры V7c (человек).",
+          "note": "23.11.2026: ref/unit_types.csv + ref/buildings.csv + CLI validate-ref готовы и проходят; закрытие требует замеров цен V7c (человек)."
         },
         {
           "id": "S2.1",
@@ -326,7 +328,8 @@
           ],
           "est": "2",
           "human_review": false,
-          "status": "pending"
+          "status": "pending",
+          "note": "23.11.2026: map_header.py — MapHeader+EstateMarkers полностью декодированы и сверены со всем корпусом карт (pytest tests/test_map_header.py PASS); Scenario/Mission/ScenarioEvent — raw-passthrough из-за расхождения доков OpenSH2 с exe 2020 (факт G18); их доразбор отложен до живых замеров."
         },
         {
           "id": "S2.5",

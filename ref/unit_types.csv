@@ -1,0 +1,23 @@
+class_name,name_ru,gold,honour,equipment,unit_value,aic_class,source,note
+ArmedPeasant,Вооружённый крестьянин,5,0,нет,5,ArmedPeasant,fandom-D (13 §D),
+Spearman,Копейщик,8,0,копьё,20,Spearman,fandom-D (13 §D),
+Archer,Лучник,12,0,лук,30,Archer,fandom-D (13 §D),
+Maceman,Пехотинник (maceman),20,1,булава+кожаная,45,Maceman,fandom-D (13 §D),
+Crossbowman,Арбалетчик,20,2,арбалет+кожаная,55,Crossbowman,fandom-D (13 §D),
+Pikeman,Пикинёр,20,2,пика+металлическая,60,Pikeman,fandom-D (13 §D),
+Swordsman,Мечник,40,8,меч+металлическая,110,Swordsman,fandom-D (13 §D),
+Knight,Рыцарь,200,50,меч+броня+конь,400,Knight,fandom-D (13 §D),
+HorseArcher,Конный лучник (наём),UNKNOWN,0,UNKNOWN,UNKNOWN,HorseArcher,fandom-D (13 §D),цены наёмного поста снять в V7c
+LightCavalry,Лёгкая конница (наём),UNKNOWN,0,UNKNOWN,UNKNOWN,LightCavalry,fandom-D (13 §D),цены наёмного поста снять в V7c
+Assassin,Убийца (наём),UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,fandom-D (13 §D),class-token нет в корпусе; «most expensive» — точные цены V7c
+Ladderman,Лестничник,UNKNOWN,0,UNKNOWN,UNKNOWN,Ladderman,corpus-class,цены снять в V7c (осадные)
+RockThrower,Метатель камней,UNKNOWN,0,UNKNOWN,UNKNOWN,RockThrower,corpus-class,цены снять в V7c (осадные)
+Berserker,Берсерк (берсерк-пост),UNKNOWN,0,UNKNOWN,UNKNOWN,Berserker,corpus-class,пост и цены — V7c
+AxeThrower,Дровосек-метатель (берсерк-пост),UNKNOWN,0,UNKNOWN,UNKNOWN,AxeThrower,corpus-class,пост и цены — V7c
+WarriorMonk,Войин-монах,UNKNOWN,UNKNOWN,UNKNOWN,UNKNOWN,WarriorMonk,corpus-class,источник/цены — V7c
+Mangonel,Баллиста-мангонель (осадное),UNKNOWN,UNKNOWN,нет,UNKNOWN,Mangonel,corpus-class,осадные юниты/машины — V7c
+Catapult,Катапультa (осадное),UNKNOWN,UNKNOWN,нет,UNKNOWN,Catapult,corpus-class,V7c
+Trebuchet,Требюшет (осадное),UNKNOWN,UNKNOWN,нет,UNKNOWN,Trebuchet,corpus-class,V7c
+Ballista,Баллиста (осадное),UNKNOWN,UNKNOWN,нет,UNKNOWN,Ballista,corpus-class,V7c
+FireBallista,Огненная баллиста (осадное),UNKNOWN,UNKNOWN,нет,UNKNOWN,FireBallista,corpus-class,V7c
+BurningCart,Огненная повозка,UNKNOWN,UNKNOWN,нет,UNKNOWN,BurningCart,corpus-class,V7c

@@ -47,13 +47,24 @@ _(дата, вопрос, решение — переносится из QUESTIO
 _(ID задачи, причина, что ждём)_
 
 ### Статистика (обновлять раз в этап)
-- Закрыто задач: 6/67 (S0.1, S1.1, S1.2, S1.3, S2.2, S2.3); вечёр потрачено: 0;
+- Закрыто задач: 6/67 (S0.1, S1.1, S1.2, S1.3, S2.2, S2.3); частичные без человека: S2.0 (CSV+валидатор, ждёт V7c), S2.4 (MapHeader/EstateMarkers готовы, Scenario* raw, ждёт V); вечёр потрачено: 0;
 - Машинных часов GA: 0; round-trip корпуса: гоняется в pytest (159 файлов, побайтовая реконструкция);
 - Открытых вопросов: 0.
 
 ---
 
 ## Записи (новые сверху)
+### [S2.0 частична + S2.4 частична] ref-CSV/валидатор и map_header.py — 2026-11-23
+- S2.0: ref/unit_types.csv (22 строки, 8 полных цен из Прил. D) + ref/buildings.csv (64 класса корпуса) + CLI `validate-ref` (проходит: 0 ошибок). Закрытие ждёт замеров цен V7c (человек) — status pending c note.
+- S2.4: tools/sh2tw/formats/map_header.py: MapHeader и EstateMarkers — полный семантический разбор + кросс-ccылки id на всех 70 картах; фикстуры chapter1/chapter8 совпали с docs OpenSH2 дословно (G17). Scenario/Mission/ScenarioEvent оставлены raw-passthrough: документ OpenSH2 расходится с payload'ами exe 2020-11-04 (G18), побайтовый round-trip при этом обеспечен S2.2/S2.3. Доразбор — за живым вечером (V).
+- Проверки:
+  $ PYTHONPATH=tools pytest tests/ -q
+  26 passed in 19.43s
+  $ PYTHONPATH=tools python3 -m sh2tw.cli validate-ref  -> RESULT: ref-контракт выполним
+- Создано: tools/sh2tw/formats/map_header.py, tools/sh2tw/refvalidate.py, tests/test_map_header.py, ref/unit_types.csv, ref/buildings.csv, CLI-сабкоманда validate-ref; §J дополнен G17,G18.
+- Следующее автономное (без человека): S2.9 aic.py+gamerules.py (round-trip, docs AIC.md + G4/G5 gamerules) — следующий агент может начать с него; контекст этой сессии исчерпан на подведении итогов.
+- Гейт человека: игровой вечер V7c (цены юнитов) + V-замеры для Scenario/Mission/ScenarioEvent и S2.10.
+
 ### [S2.2 + S2.3] object_tree.py: обход по маркерам + round-trip корпуса — done, 2026-11-23
 - План: generic-walk распакованных сегментов по Object.md; инвариант — побайтовая реконструкция; корпусная приёмка.
 - Сделано: tools/sh2tw/formats/object_tree.py: magic-пара (5CA1AB1E,1) на старте каждого сегмента (G15); записи [id][reg] + [len][name] для новых reg; цепочка предков с правилом «письмо записи только для незарегистрированного предка» и lookahead-осторожностью; payload до маркера AF1EFFFF; Harvest подблоков [A5C1FFFF][reg][len][name] внутри payload (иначе поздние объекты с этим reg читаются как новые — крах на клановых картах); спец-граница HeightLayer по объявленным длинам (в плоскостях углов попадается ложный AF1EFFFF — обычный поиск drift'ит); единый класс Sh2ParseError.

@@ -23,6 +23,8 @@ def main(argv: list[str] | None = None) -> int:
     cb = sub.add_parser("check-build", help="сверка exe с эталоном v1.5.0 (S1.2)")
     cb.add_argument("--report", default=None, help="путь отчёта V5.json")
 
+    vr = sub.add_parser("validate-ref", help="валидация ref/*.csv (S2.0)")
+
     w = sub.add_parser("watch-saves", help="лог файл-событий Saves/ (S1.3, для V3a)")
     w.add_argument("--secs", type=float, default=600, help="сколько секунд наблюдать")
     w.add_argument("--interval", type=float, default=2.0, help="период поллинга, с")
@@ -46,6 +48,12 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(rep["metrics"]["checks"], ensure_ascii=False, indent=1))
         print("RESULT:", rep["result"])
         return 0 if all(c["match"] for c in rep["metrics"]["checks"].values()) else 1
+
+    if args.cmd == "validate-ref":
+        from .refvalidate import run_validate_ref
+
+        repo = Path(__file__).resolve().parents[2]
+        return run_validate_ref(repo)
 
     if args.cmd == "watch-saves":
         from .watcher import jsonl_logger, watch
