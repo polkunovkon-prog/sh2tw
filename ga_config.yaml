@@ -1,0 +1,19 @@
+# ga_config.yaml — конфиг GA-конвейера доктрин (ТЗ 08 §8.3, §8.7, §8.9).
+# Загрузчик: tools/sh2tw/ga/engine.py load_ga_config() (по умолчанию этот файл).
+population: 12
+generations_max: 20
+matches_per_candidate: 3
+defenses_portfolio: [def_hedgehog, def_archers, def_killer_walls]
+selection:
+  kind: tournament
+  k: 3
+elitism: 2
+mutation:
+  sigma_rel: 0.15   # гауссова сигма = 0.15 × диапазон гена (08 §8.7)
+  gene_prob: 0.3    # вероятность мутации на ген
+crossover: uniform
+speed: x3           # ускорение игры в матче GA
+instances: 2        # параллельных инстанса игры (Sandboxie, 08 §8.9)
+stop:
+  winrate_plateau_generations: 5  # поколений без улучшения лучшего фитнеса
+time_budget_hours_per_generation: 2  # жёсткий лимит машинного времени (08 §8.9)
