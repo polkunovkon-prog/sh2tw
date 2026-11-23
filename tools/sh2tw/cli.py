@@ -47,6 +47,13 @@ def main(argv: list[str] | None = None) -> int:
                     help="файл diff-документа (без --out — в stdout; "
                          "'/tmp/...' -> системный temp, как у parse)")
 
+    dmm = sub.add_parser("diff-maps", help="побайтовое сравнение двух карт/сейвов "
+                                       "по сегментам (S3.2, процедура 05 §5.3)")
+    dmm.add_argument("a", help="эталон .s2m/.sh2")
+    dmm.add_argument("b", help="правленая копия .s2m/.sh2")
+    dmm.add_argument("--out", default=None, help="файл отчёта JSON "
+                     "(без --out — краткая сводка в stdout)")
+
     hn = sub.add_parser("honesty", help="протокол честности матча (S2.8, 04 §4.6): "
                                      "start.json end.json spec.json")
     hn.add_argument("start", help="snapshot.json старта (или .sh2/.s2m — разберём)")
@@ -142,6 +149,25 @@ def main(argv: list[str] | None = None) -> int:
                              ensure_ascii=False, indent=1))
         else:
             print(diff_json(doc))
+        return 0
+
+    if args.cmd == "diff-maps":
+        from .formats.s2m_file import Sh2ParseError
+        from .scenes.diff_maps import diff_maps_json, run_diff_maps
+        from .scenes.patcher import PatchError
+        from .snapshot_builder import resolve_out_path
+
+        out_path = resolve_out_path(args.out) if args.out else None
+        try:
+            doc = run_diff_maps(Path(args.a), Path(args.b), out_path)
+        except (Sh2ParseError, PatchError, OSError) as e:
+            print(f"ОШИБКА DIFF-MAPS: {type(e).__name__}: {e}", file=sys.stderr)
+            return 1
+        if out_path is not None:
+            print(json.dumps({"out": str(out_path),
+                              "summary": doc["summary"]}, ensure_ascii=False, indent=1))
+        else:
+            print(diff_maps_json(doc))
         return 0
 
     if args.cmd == "honesty":
